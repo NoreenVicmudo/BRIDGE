@@ -1,0 +1,126 @@
+RewriteEngine On
+
+# Specific redirects first (before the general .php extension rule)
+#user_auth
+RewriteRule ^login$ user_auth/views/login.php [L]
+RewriteRule ^account-pending$ user_auth/views/landing_account_pending.php [L]
+
+RewriteRule ^forget-password$ user_auth/views/find_account.php [L]
+RewriteRule ^verify-account$ user_auth/views/verify_account.php [L]
+RewriteRule ^token-expired$ user_auth/views/landing_token_expired.php [L]
+RewriteRule ^change-password$ user_auth/views/change_password.php [L]
+
+RewriteRule ^verify-email$ user_auth/views/signup_email.php [L]
+RewriteRule ^verify-email-sent$ user_auth/views/landing_signup_email.php [L]
+RewriteRule ^signup$ user_auth/views/signup.php [L]
+RewriteRule ^signup-error$ user_auth/views/landing_link_error.php [L]
+RewriteRule ^signup-success$ user_auth/views/landing_pending_approval.php [L]
+
+#public
+RewriteRule ^home$ public/main_page.php [L]
+RewriteRule ^session-expired$ public/landing_timeout.php [L]
+RewriteRule ^access-restricted$ public/access_restricted.php [L]
+
+#transaction logs
+RewriteRule ^transaction-logs$ modules/transaction_logs/views/transaction_logs.php [L]
+
+#settings
+RewriteRule ^settings$ modules/settings/views/settings.php [L]
+
+#additional entry
+RewriteRule ^student-information-entry$ modules/additional_entry/views/student_info_data_entry.php [L]
+RewriteRule ^academic-profile-entry$ modules/additional_entry/views/academic_profile_data_entry.php [L]
+RewriteRule ^program-metrics-entry$ modules/additional_entry/views/program_metrics_data_entry.php [L]
+
+#user management
+RewriteRule ^approvals$ modules/user_information/views/approval_request.php [L]
+RewriteRule ^users$ modules/user_information/views/user_list.php [L]
+RewriteRule ^edit-user$ modules/user_information/views/edit_user.php [L]
+
+#program metrics
+RewriteRule ^program-metrics-filter$ modules/program_metrics/views/program_metrics_filter.php [L]
+RewriteRule ^licensure-exam-results$ modules/program_metrics/views/licensure_exam.php [L]
+RewriteRule ^edit-licensure-exam-results$ modules/program_metrics/views/edit_licensure_exam.php [L]
+RewriteRule ^mock-board-scores$ modules/program_metrics/views/mock_scores.php [L]
+RewriteRule ^edit-mock-board-scores$ modules/program_metrics/views/edit_mock_scores.php [L]
+RewriteRule ^student-review-center$ modules/program_metrics/views/review_center.php [L]
+RewriteRule ^edit-student-review-center$ modules/program_metrics/views/edit_review_center.php [L]
+
+#student information
+RewriteRule ^student-information-filter$ modules/student_info/views/student_info_filter.php [L]
+RewriteRule ^masterlist$ modules/student_info/views/student_masterlist.php [L]
+RewriteRule ^add-student-masterlist$ modules/student_info/views/add_student_to_masterlist.php [L]
+RewriteRule ^edit-student-masterlist$ modules/student_info/views/edit_student_in_masterlist.php [L]
+RewriteRule ^student-information$ modules/student_info/views/student_info.php [L]
+RewriteRule ^add-student-information$ modules/student_info/views/add_student_info.php [L]
+RewriteRule ^edit-student-information$ modules/student_info/views/edit_student_info.php [L]
+
+#academic profile
+RewriteRule ^academic-profile-filter$ modules/academic_profile/views/academic_profile_filter.php [L]
+RewriteRule ^academic-recognition$ modules/academic_profile/views/academic_recognition.php [L]
+RewriteRule ^edit-academic-recognition$ modules/academic_profile/views/edit_academic_recognition.php [L]
+RewriteRule ^board-subject-grades$ modules/academic_profile/views/boardsubject_grades.php [L]
+RewriteRule ^edit-board-subject-grades$ modules/academic_profile/views/edit_boardsubject_grades.php [L]
+RewriteRule ^general-weighted-average$ modules/academic_profile/views/gwa_info.php [L]
+RewriteRule ^edit-general-weighted-average$ modules/academic_profile/views/edit_gwa_info.php [L]
+RewriteRule ^performance-rating$ modules/academic_profile/views/performance_rating.php [L]
+RewriteRule ^edit-performance-rating$ modules/academic_profile/views/edit_performance_rating.php [L]
+RewriteRule ^back-subjects-retakes$ modules/academic_profile/views/retakes_info.php [L]
+RewriteRule ^edit-back-subjects-retakes$ modules/academic_profile/views/edit_retakes_info.php [L]
+RewriteRule ^review-classes-attendance$ modules/academic_profile/views/review_attendance.php [L]
+RewriteRule ^edit-review-classes-attendance$ modules/academic_profile/views/edit_review_attendance.php [L]
+RewriteRule ^simulation-exam-results$ modules/academic_profile/views/simulation_exam.php [L]
+RewriteRule ^edit-simulation-exam-results$ modules/academic_profile/views/edit_simulation_exam.php [L]
+
+#generate report
+RewriteRule ^generate-report-filter$ modules/generate_report/views/generate_report_filter.php [L]
+RewriteRule ^generate-report-programs$ modules/generate_report/views/generate_report_programs.php [L]
+RewriteRule ^generate-report-batch$ modules/generate_report/views/generate_report.php [L]
+
+
+# Hide .php extension from URLs
+# This rule removes .php from URLs when accessed without the extension
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# Optional: Redirect .php URLs to clean URLs (uncomment if you want to force clean URLs)
+# RewriteCond %{THE_REQUEST} /([^.]+)\.php [NC]
+# RewriteRule ^ /%1? [NC,L,R=301]
+
+# Security: Prevent direct access to sensitive files
+<Files "composer.json">
+    Require all denied
+</Files>
+
+<Files "composer.lock">
+    Require all denied
+</Files>
+
+# Prevent access to .htaccess files
+<Files ".htaccess">
+    Require all denied
+</Files>
+
+# Enable compression for better performance
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+</IfModule>
+# Set cache headers for static files
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+</IfModule>

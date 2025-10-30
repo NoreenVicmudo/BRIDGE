@@ -1,0 +1,312 @@
+:root {
+    --primary: #5c297c;   /* Heritage Purple */
+    --secondary: #ffb736; /* Heritage Gold */
+    --light: #FFFFFF;
+    --dark: #1d1a27;
+    --warning: #ed1c24;
+    --faded: #60357a;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+    color: var(--dark);
+}
+
+.access-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.access-card {
+    background: var(--light);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(92, 41, 124, 0.15);
+    border: 1px solid rgba(92, 41, 124, 0.1);
+    overflow: hidden;
+    max-width: 800px;
+    width: 100%;
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.access-header {
+    background: linear-gradient(135deg, var(--primary), var(--faded));
+    color: var(--light);
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.access-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.access-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.access-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.access-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+}
+
+.access-content {
+    padding: 3rem 2rem;
+}
+
+.access-message {
+    font-size: 1.2rem;
+    color: var(--dark);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.user-info-card {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--primary);
+    box-shadow: 0 4px 15px rgba(92, 41, 124, 0.1);
+}
+
+.user-info-card h4 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.user-info-card p {
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.actions-section h4 {
+    color: var(--dark);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.action-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.action-item:hover {
+    background-color: rgba(92, 41, 124, 0.05);
+    padding-left: 1rem;
+    border-radius: 8px;
+}
+
+.action-item:last-child {
+    border-bottom: none;
+}
+
+.action-icon {
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    color: var(--primary);
+    width: 2rem;
+    text-align: center;
+}
+
+.btn-custom {
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary-custom {
+    background: var(--primary);
+    color: var(--light);
+    box-shadow: 0 4px 15px rgba(92, 41, 124, 0.3);
+}
+
+.btn-primary-custom:hover {
+    background: var(--faded);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(92, 41, 124, 0.4);
+    color: var(--light);
+}
+
+.btn-secondary-custom {
+    background: #6c757d;
+    color: var(--light);
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+}
+
+.btn-secondary-custom:hover {
+    background: #545b62;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+    color: var(--light);
+}
+
+.btn-success-custom {
+    background: var(--secondary);
+    color: var(--dark);
+    box-shadow: 0 4px 15px rgba(255, 183, 54, 0.3);
+}
+
+.btn-success-custom:hover {
+    background: #e6a530;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 183, 54, 0.4);
+    color: var(--dark);
+}
+
+.contact-info-card {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid rgba(92, 41, 124, 0.1);
+}
+
+.contact-info-card h5 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.contact-info-card p {
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .access-container {
+        padding: 1rem 0.5rem;
+    }
+    
+    .access-header {
+        padding: 2rem 1.5rem;
+    }
+    
+    .access-content {
+        padding: 2rem 1.5rem;
+    }
+    
+    .access-title {
+        font-size: 2rem;
+    }
+    
+    .access-icon {
+        font-size: 3rem;
+    }
+    
+    .btn-custom {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .access-header {
+        padding: 1.5rem 1rem;
+    }
+    
+    .access-content {
+        padding: 1.5rem 1rem;
+    }
+    
+    .access-title {
+        font-size: 1.75rem;
+    }
+    
+    .access-icon {
+        font-size: 2.5rem;
+    }
+    
+    .access-message {
+        font-size: 1.1rem;
+    }
+    
+    .user-info-card,
+    .contact-info-card {
+        padding: 1.5rem;
+    }
+    
+    .action-item {
+        padding: 0.8rem 0;
+    }
+}
+
+/* Additional enhancements */
+.access-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 25px 50px rgba(92, 41, 124, 0.2);
+}
+
+.access-card {
+    transition: all 0.3s ease;
+}
+
+.btn-custom:focus {
+    box-shadow: 0 0 0 0.2rem rgba(92, 41, 124, 0.25);
+}
+
+
+/****************************** LOADER CSS ******************************/
+#nprogress .bar {
+    background: var(--primary) !important;
+    height: 4px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    z-index: 9999;
+  }
+  
+  #nprogress .peg, #nprogress .spinner {
+    display: none !important;
+  }
+  

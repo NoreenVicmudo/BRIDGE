@@ -1,0 +1,595 @@
+/* =====================
+   Root Variables
+   ===================== */
+:root {
+  --primary: #5c297c;
+  --secondary: #ffb736;
+  --light: #FFFFFF;
+  --dark: #1d1a27;
+  --warning: #ed1c24;
+}
+
+/* =====================
+   Base Styles
+   ===================== */
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+/* =====================
+   Body & Background
+   ===================== */
+body {
+  min-height: 100vh;
+  background: var(--light) radial-gradient(#ccc 1px, transparent 1px);
+  background-size: 20px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%);
+  z-index: -1;
+}
+
+/* =====================
+   Layout Containers
+   ===================== */
+.form-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-container {
+  background: var(--light);
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+/* =====================
+   Animations
+   ===================== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================
+   Custom Scrollbar
+   ===================== */
+.form-container::-webkit-scrollbar {
+  width: 6px;
+}
+.form-container::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 6px;
+}
+
+/* =====================
+   Typography
+   ===================== */
+h2 {
+  margin-bottom: 20px;
+  color: var(--primary);
+  font-size: 22px;
+  font-weight: 600;
+  text-align: left;
+}
+
+/* =====================
+   Form Elements
+   ===================== */
+.input-group {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  background: var(--light);
+  color: var(--dark);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.2s ease;
+}
+
+/* Add extra padding-right to select elements to prevent overlap with caret */
+.input-group select {
+  padding-right: 35px;
+}
+
+/* ✅ Focus state for both inputs and selects */
+.input-group input:focus,
+.input-group select:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+}
+
+/* =====================
+   Floating label
+   ===================== */
+.input-group label {
+  z-index: 5;
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: var(--primary);
+  background: var(--light);
+  padding: 0 6px;
+  pointer-events: none;
+  transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+/* Inputs float on focus or when text exists */
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+  top: -8px;
+  font-size: 14px;
+  color: var(--secondary);
+  transform: none;
+}
+
+/* Selects float on focus or when valid (first option has empty value) */
+.input-group select:focus ~ label,
+.input-group select:valid ~ label {
+  top: -8px;
+  font-size: 14px;
+  color: var(--secondary);
+  transform: none;
+}
+
+/* =====================
+   Caret icon
+   ===================== */
+.input-group .caret {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--primary);
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.input-group select:focus ~ .caret {
+  transform: translateY(-50%) rotate(180deg);
+  color: var(--secondary);
+}
+
+/* =====================
+   Name Row
+   ===================== */
+.name-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.name-row .input-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* =====================
+   Buttons
+   ===================== */
+.btn {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  min-width: 160px;
+  margin: 6px auto 0;
+  padding: 12px 24px;
+  background: var(--primary);
+  color: var(--light);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+  text-decoration: none; /* for <a> buttons */
+}
+.btn:hover {
+  background: var(--secondary);
+  box-shadow: 0 12px 22px rgba(124, 58, 237, 0.22);
+  color: var(--light)
+}
+.btn:active {
+  transform: translateY(1px);
+  color: var(--light);
+}
+
+/* Ensure consistent text color in all states */
+.btn:hover,
+.btn:focus,
+.btn:active {
+  color: var(--light) !important;
+  outline: none;
+}
+
+/* =====================
+   Mobile tweaks
+   ===================== */
+@media (max-width: 480px) {
+  body {
+    padding: 16px;
+  }
+  .form-container {
+    padding: 16px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+}
+
+/* =====================
+   Respect reduced motion
+   ===================== */
+@media (prefers-reduced-motion: reduce) {
+  .input-group input,
+  .input-group select,
+  .input-group .caret,
+  .btn {
+    transition: none !important;
+  }
+}
+
+/* =====================
+   Program Selection
+   ===================== */
+#programGroup {
+  margin-bottom: 20px;
+}
+
+#programGroup select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  background: var(--light);
+  color: var(--dark);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.2s ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 35px;
+  cursor: pointer;
+}
+
+#programGroup select:hover {
+  background: #f6f3ff;
+}
+
+#programGroup select:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.18), 0 0 0 4px rgba(124, 58, 237, 0.08);
+  background: #fbfaff;
+}
+
+/* =====================
+   Hide browser password toggle
+   ===================== */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  display: none !important;
+}
+
+/* Password toggle button */
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--primary);
+  transition: color 0.3s ease;
+  z-index: 1;
+}
+.toggle-password:hover {
+  color: var(--secondary);
+}
+.input-group input[type="password"] {
+  padding-right: 35px;
+}
+
+/* =====================
+   Character Count
+   ===================== */
+.char-count {
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  font-size: 11px;
+  color: var(--primary);
+  padding: 2px 6px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.char-count.warning {
+  color: var(--warning);
+}
+
+.char-count.max-reached {
+  color: var(--warning);
+  font-weight: 600;
+}
+
+/* =====================
+   Messages
+   ===================== */
+.message {
+  color: var(--warning);
+}
+
+/* =====================
+   Go Back Button
+   ===================== */
+.go-back {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  text-decoration: none;
+  color: #666666 !important;
+  border: 1px solid #ddd !important;
+  font-weight: 500;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+.go-back:hover {
+  background-color: var(--secondary) !important;
+  color: var(--light) !important;
+  border-color: var(--secondary) !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* =====================
+   NProgress Bar
+   ===================== */
+#nprogress .bar {
+  background: var(--primary) !important;
+  height: 4px;
+  position: fixed;
+  inset: 0;
+  width: 100vw !important;
+  z-index: 9999;
+}
+#nprogress .peg, #nprogress .spinner {
+  display: none !important;
+}
+
+/* =====================
+   Loader
+   ===================== */
+/* Loader (hidden by default) */
+.loader {
+    display: none; /* hide by default */
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--light);
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-left: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Button in loading state */
+.btn.loading .btn-text {
+    display: none; /* hide button text */
+}
+
+.btn.loading .loader {
+    display: inline-block; /* show loader */
+}
+
+/* Prevent button fade when disabled (but not when loading) */
+.btn:disabled:not(.loading) {
+    opacity: 1 !important;
+    cursor: not-allowed;
+}
+
+.btn.loading {
+    background-color: var(--primary) !important; /* your primary color */
+    color: var(--light);              /* text (for fallback) */
+    border-color:var(--primary) !important;    /* keep border */
+    opacity: 0.6 !important;
+    cursor: not-allowed;
+}
+
+
+
+
+/* =====================
+   Responsive Adjustments
+   ===================== */
+@media (max-width: 768px) {
+  body { padding: 15px; }
+  .form-container {
+    width: 95%;
+    max-width: 500px;
+    padding: 15px;
+    margin-top: 40px;
+  }
+  .go-back {
+    position: absolute;
+    top: -35px;
+    left: 0;
+    margin: 0;
+    padding: 10px;
+  }
+}
+@media (max-width: 450px) {
+  body { padding: 10px; }
+  .form-container { width: 100%; padding: 15px; }
+  h2 { font-size: 20px; }
+  .input-group input,
+  .input-group select { padding: 10px; font-size: 16px; }
+  .input-group select { padding-right: 30px; } /* Ensure caret doesn't overlap on small screens */
+  .input-group label { font-size: 14px; }
+  .btn { padding: 10px; font-size: 14px; }
+}
+@media (max-width: 380px) {
+  .form-container { padding: 12px; }
+  h2 { font-size: 18px; }
+  .input-group input,
+  .input-group select { font-size: 16px; padding: 8px; }
+  .input-group select { padding-right: 28px; } /* Adjust for very small screens */
+  .input-group label { font-size: 13px; }
+  .btn { font-size: 14px; padding: 10px; }
+}
+@media (max-width: 320px) {
+  .form-container { padding: 10px; }
+  h2 { font-size: 16px; }
+  .input-group input,
+  .input-group select { font-size: 16px; padding: 6px; }
+  .input-group select { padding-right: 25px; } /* Adjust for smallest screens */
+  .input-group label { font-size: 12px; }
+  .btn { font-size: 12px; padding: 8px; }
+  .message { font-size: 14px; text-align: center; padding: 8px; }
+}
+
+/* =====================
+   Miscellaneous
+   ===================== */
+h4 { color: var(--primary) }
+
+/* =====================
+   Modal Checkbox
+   ===================== */
+.form-check-input:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.form-check-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.25rem rgba(92, 41, 124, 0.25);
+}
+
+.form-check-input {
+  border-color: var(--primary);
+}
+
+/* =====================
+   Password Requirements
+   ===================== */
+.password-requirements {
+  margin: 8px 0 15px 0;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  max-width: 400px;
+  text-align: left;
+}
+
+.requirement-item {
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  line-height: 1.3;
+}
+
+.requirement-item i {
+  margin-right: 10px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.requirement-item.valid {
+  color: #28a745;
+}
+
+.requirement-item.valid i {
+  color: #28a745;
+}
+
+.requirement-item.invalid {
+  color: #6c757d;
+}
+
+.requirement-item.invalid i {
+  color: #adb5bd;
+}
+
+.requirement-item.valid i::before {
+  content: "\f26a"; /* bi-check-circle */
+}
+
+.requirement-item.invalid i::before {
+  content: "\f28a"; /* bi-circle */
+}
+
+/* Ensure proper icon display */
+.requirement-item i {
+  font-family: "bootstrap-icons" !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .password-requirements {
+    max-width: 100%;
+    padding: 10px 12px;
+  }
+  
+  .requirement-item {
+    font-size: 12px;
+    margin: 3px 0;
+  }
+  
+  .requirement-item i {
+    font-size: 13px;
+    margin-right: 8px;
+  }
+}
+

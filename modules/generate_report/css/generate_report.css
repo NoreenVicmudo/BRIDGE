@@ -1,0 +1,2191 @@
+:root {
+  --laptop-width: 1366px;
+  --primary: #5c297c;
+  --secondary: #ffb736;
+  --light: #FFFFFF;
+  --dark: #1d1a27;
+  --warning: #ed1c24;
+  --faded: #60357a;
+}
+
+/* Modal animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-30px); }
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: var(--light);
+  background-image: radial-gradient(#ccc 1px, transparent 1px);
+  background-size: 20px 20px;
+  position: relative;
+  min-height: 100vh;
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/***************BUTTONS CSS***********************************/
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background: var(--primary);
+  color: var(--light);
+  cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative;
+  z-index: 10;
+}
+
+button:hover {
+  background: var(--secondary);
+}
+
+a.control {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--light) !important;  /* override primary */
+  color: #666666 !important;
+  border: 1px solid #ddd !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none; /* remove underline */
+  font-weight: 600;
+}
+
+a.control:hover{
+  background-color: var(--secondary) !important;
+  color: var(--light) !important;
+  border-color: var(--secondary) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  background: #ffb736; /* optional: darker on hover */
+}
+
+/*MODAL BTN CLEAR*/
+.btn-clear {
+  background-color: var(--light) !important;  /* override primary */
+  color: #666666 !important;
+  border: 1px solid #ddd !important;
+}
+
+.btn-clear:hover {
+  background-color: var(--secondary) !important;
+  color: var(--light) !important;
+  border-color: var(--secondary) !important;
+}
+
+/* Modal buttons */
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  grid-column: span 2;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px !important;
+  cursor: pointer;
+}
+
+/* Primary Button Style */
+.primary-button {
+  background-color: var(--primary);
+  color: var(--light);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.primary-button:hover {
+  background-color: var(--secondary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Disabled button styles */
+.primary-button.disabled,
+.primary-button:disabled,
+.export-option.disabled,
+.export-option:disabled,
+.export-btn.disabled,
+.export-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  justify-content: flex-start; /* Align buttons to the left */
+  gap: 16px;                   /* Add space between buttons */
+  margin-top: 20px;
+  margin-bottom:10px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Responsive: stack toolbar buttons on small screens */
+@media (max-width: 768px) {
+  .button-container {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .button-container {
+    flex-direction: column;
+    align-items: stretch; /* keep full-width buttons */
+    gap: 10px;
+  }
+  .button-container .primary-button,
+  .button-container .export-btn,
+  .button-container .return-btn,
+  .button-container .select-tool-btn {
+    width: 100%;
+    /* Left-align button contents while preserving full-width buttons */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .export-dropdown {
+    width: 100%;
+  }
+  .export-menu {
+    left: 0;
+    right: 0;
+    min-width: unset;
+    width: 100%;
+  }
+  /* Move chevron to the far right on small screens */
+  .export-btn {
+    display: flex;
+  }
+  .export-btn .bi-chevron-down,
+  .export-btn .bi-caret-down,
+  .export-btn .caret { /* support both icon classes */
+    margin-left: auto;
+  }
+}
+
+/* Ensure consistent spacing between icon and text for Print button */
+.print-btn, .return-btn, .select-tool-btn, .export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 10;
+}
+
+
+
+
+
+/* DISPLAY REPORT CUSTOMIZATION */
+    .report-wrapper {
+      font-family: Inter, Roboto, Arial, sans-serif;
+      overflow-x: auto;
+      overflow-y: visible;
+      width: 100%;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+      z-index: 1;
+      min-height: auto;
+    }
+
+    /* Ensure modal is not clipped by report-wrapper or any parent container */
+    .modal {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      z-index: 10000 !important;
+    }
+
+    /* Ensure modal content is properly positioned */
+    .modal-content {
+      position: relative !important;
+      z-index: 10001 !important;
+    }
+
+    /* Override any parent container overflow that might clip the modal */
+    .report-wrapper .modal,
+    .main-wrapper .modal,
+    .content .modal {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      z-index: 10000 !important;
+    }
+
+    #report {
+      width: var(--laptop-width);
+      background: var(--light);
+      padding: 20px;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      box-sizing: border-box;
+      margin: 0 auto;
+      overflow: visible;
+      position: relative;
+      z-index: 1;
+      min-height: auto;
+    }
+
+    header.report-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    header .title { font-size: 32px; font-weight: 700; }
+    header .meta { font-size: 16px; color: #4a5568; }
+    .section { margin-bottom: 16px; }
+    .section h2 { margin: 4px 0 10px; font-size: 16px; }
+    
+    /* Add spacing between report elements */
+    .generated-report h2 { 
+        margin: 20px 0 15px 0; 
+        font-size: 24px; 
+        color: #000000;
+        font-weight: bold;
+    }
+
+    .generated-report h3 { 
+        font-size: 18px; 
+        color: #000000;
+        font-weight: bold;
+    }
+    
+    .report-summary { 
+        margin-bottom: 20px; 
+    }
+    
+    .chart { 
+        margin-top: 20px; 
+        margin-bottom: 20px; 
+    }
+    
+    /* Add spacing between tables and other elements */
+    table.report-table { 
+        margin-bottom: 20px; 
+    }
+    
+    /* Add spacing between h2 headings and content */
+    .generated-report h2 + * { 
+        margin-top: 15px; 
+    }
+    
+    /* Add spacing between different report sections */
+    #reportSummary { 
+        font-size: 16px;
+        margin-bottom: 25px; 
+    }
+    
+    /* Ensure proper spacing for all report content */
+    .generated-report > * { 
+        margin-bottom: 20px; 
+    }
+    
+    .generated-report > *:last-child { 
+        margin-bottom: 0; 
+    }
+    
+    /* Add spacing for any additional report content */
+    .report-content { 
+        margin-bottom: 20px; 
+    }
+    
+    /* Ensure tables have proper spacing */
+    table { 
+        margin-bottom: 20px; 
+    }
+    
+    /* Add spacing for chart containers */
+    #reportChart { 
+        margin: 20px 0; 
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+      table-layout: auto;
+    }
+    th, td {
+      border: 1px solid #cbd5e0;
+      padding: 8px;
+      text-align: center !important;
+      white-space: nowrap;
+    }
+    th { background: #f7fafc; font-weight: 700; }
+
+    /* Responsive table design for report outputs */
+    table.report-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+      table-layout: auto;
+    }
+    table.report-table th,
+    table.report-table td {
+      border: 1px solid #cbd5e0;
+      padding: 8px;
+      text-align: left;
+      white-space: nowrap;
+    }
+    table.report-table th { background: #f7fafc; font-weight: 700; }
+    
+    /* Compact tables for 1-2 columns */
+    table.report-table.compact-table {
+      width: auto;
+      max-width: 50%;
+      margin: 0 0 20px 0;
+    }
+    
+    /* Auto-detect and apply compact styling for 1-2 column tables using :has() selector */
+    @supports selector(:has(*)) {
+      table.report-table:has(thead tr:first-child th:only-child),
+      table.report-table:has(thead tr:first-child th:nth-child(2):last-child),
+      table.report-table:has(tbody tr:first-child td:only-child),
+      table.report-table:has(tbody tr:first-child td:nth-child(2):last-child) {
+        width: auto;
+        max-width: 50%;
+        margin: 0 0 20px 0;
+      }
+    }
+    
+    /* Fallback for browsers that don't support :has() */
+    table.report-table.compact-1-col,
+    table.report-table.compact-2-col {
+      width: auto;
+      max-width: 50%;
+      margin: 0 0 20px 0;
+    }
+    
+    @media (max-width: 768px) {
+      table.report-table { font-size: 16px; }
+      table.report-table th, table.report-table td { padding: 6px; }
+      
+      /* Make compact tables even more compact on mobile */
+      table.report-table.compact-table,
+      table.report-table.compact-1-col,
+      table.report-table.compact-2-col {
+        max-width: 80%;
+      }
+    }
+
+    #chartWrap {
+      height: 360px;
+      width: 100%;
+    }
+
+    /* Ensure generated chart area fills and doesn't crop */
+    #reportChart {
+      width: 100%;
+      min-height: 400px;
+      height: auto;
+      overflow: visible;
+    }
+    #reportChart canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    @media print {
+  @page { size: Letter portrait; margin: 0; }
+  *, *::before, *::after { margin: 0 !important; padding: 0 !important; box-sizing: border-box !important; }
+  body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
+  .button-container { display: none !important; }
+  .top-header { display: none !important; }
+  .headings { display: none !important; }
+  h2.headings { display: none !important; }
+
+  html, body { width: 100% !important; min-width: 0 !important; overflow: visible !important; zoom: 1 !important; }
+
+  /* FIX OPACITY ISSUES FOR PRINT - Override all fade animations and opacity settings */
+  .report-wrapper,
+  .report-content,
+  .report-header,
+  .report-footer,
+  .generated-report,
+  .report-summary,
+  #report,
+  #reportSummary,
+  #generatedReport,
+  .section,
+  .chart,
+  #reportChart,
+  table,
+  th,
+  td,
+  h1, h2, h3, h4, h5, h6,
+  p, div, span {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+    visibility: visible !important;
+    display: block !important;
+  }
+
+  /* Ensure tables are visible in print */
+  table {
+    display: table !important;
+    opacity: 1 !important;
+  }
+  
+  th, td {
+    display: table-cell !important;
+    opacity: 1 !important;
+  }
+
+  .report-wrapper {
+    position: relative !important;
+    width: 816px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    left: 0 !important;
+    top: 0 !important;
+    opacity: 1 !important;
+  }
+
+  #report {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: var(--laptop-width) !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 18px !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    box-sizing: border-box !important;
+    transform: scale(0.597) !important; /* 816 / 1366 */
+    transform-origin: top left !important;
+    opacity: 1 !important;
+  }
+
+  table { table-layout: fixed !important; width: 100% !important; border-spacing: 0 !important; margin-bottom: 20px !important; }
+  th, td { padding: 8px !important; white-space: nowrap !important; overflow: hidden !important; }
+  
+  /* Override compact table styling in print mode */
+  table.report-table.compact-table,
+  table.report-table.compact-1-col,
+  table.report-table.compact-2-col {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 0 20px 0 !important;
+  }
+  
+  /* Maintain spacing in print mode */
+  .generated-report h2 { margin: 20px 0 15px 0 !important; color:#000000 !important; }
+  .report-summary { margin-bottom: 20px !important; }
+  .chart { margin: 20px 0 !important; }
+  #reportChart { margin: 20px 0 !important; }
+
+  /* Ensure the progress bar does not affect print layout */
+  #nprogress, #nprogress *, #nprogress .bar { display: none !important; }
+}
+
+/* Force page break before wide/long blocks when needed */
+.page-break-before {
+  break-before: page;
+  page-break-before: always;
+}
+
+/* Avoid splitting tables and charts across pages */
+table.report-table, 
+.canvasjs-chart-container {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+
+  /*******************************************MODAL CUSTOM********************************************/
+  input, select {
+    padding: 12px;
+    width: 45%;
+    min-width: 200px; /* Set minimum width to accommodate "Inferential" option */
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  input:hover, select:hover {
+    box-shadow: 1px 1px 5px var(--primary);
+  }
+  
+  div label {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  
+  .row label {
+    white-space: normal;
+    word-break: break-word;
+    max-width: 150px;
+  }
+  
+  /* ComboBox Form */
+  .form-container {
+    display: grid;
+    gap: 10px;
+    max-width: 500px;
+    margin: auto;
+  }
+  
+  .form-container .form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .form-container .form-group label {
+    width: 120px; /* Consistent label width */
+    font-weight: bold;
+  }
+  
+  /* ComboBox Form */
+  .form-container .form-group select {
+      flex: 1;
+      min-width: 200px; /* Set minimum width to accommodate "Inferential" option */
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 5px; /* Make the borders rounded */
+      border: 1px solid var(--primary); /* Set the primary border color */
+      background-color: var(--light);
+      transition: border-color 0.3s ease; /* Smooth transition for border color */
+  }
+  
+  .form-container .form-group select:hover {
+      border-color: var(--secondary); /* Secondary border color on hover */
+  }
+  
+  .form-container .form-group select:focus {
+      border-color: var(--secondary); /* Secondary border color on focus */
+      outline: none; /* Remove the default outline on focus */
+  }
+  
+  .form-container .form-group select:hover, 
+  .form-container .form-group select:focus {
+      background-color: var(--light); /* Light background on hover or focus */
+  }
+
+  select {
+    padding: 12px;
+    width: 45%;
+    min-width: 200px; /* Set minimum width to accommodate "Inferential" option */
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  select:hover {
+    box-shadow: 1px 1px 5px var(--primary);
+  }
+  
+  div label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  
+  /* General modal styles */
+  .modal {
+    position: fixed !important;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(30, 30, 30, 0.4);
+    overflow: hidden !important;
+  }
+  
+  /* Prevent body scroll when modal is open */
+  body.modal-open {
+    overflow: hidden !important;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .modal.show {
+    display: flex; /* Only show when .show is added */
+  }
+  
+  /* When closing */
+  .modal.closing .modal-content {
+    animation: fadeOut 0.5s ease-in-out forwards;
+  }
+  .modal-content {
+    background-color: var(--light);
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease-in-out;
+    position: relative;
+    min-height: 200px;
+    transform: translateY(0);
+    transition: transform 0.3s ease, height 0.3s ease;
+    z-index: 10001 !important;
+  }
+  
+  .modal-content h2 {
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-size: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .modal-content h3 {
+    color: var(--primary);
+    margin: 15px 0 10px;
+    font-size: 16px;
+  }
+  
+  .modal-content h4 {
+    color: var(--primary);
+    margin: 10px 0 5px;
+    font-size: 14px;
+  }
+  
+  /*Scrollbar styles*/
+  .modal-content {
+    max-height: 75vh;   /* Adjust as needed */
+    overflow-y: auto;
+    padding-right: 10px; /* Space for scrollbar */
+  }
+  
+  .modal-content::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .modal-content::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 6px;
+  }
+  
+  .modal-content::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Form Container Styles */
+  .form-container {
+    margin-bottom: 15px;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .modal {
+      padding: 10px;
+    }
+    .modal-content {
+      width: 95%;
+      margin: 10px auto;
+      padding: 15px;
+      max-height: 95vh;
+      transform: translateY(-10px);
+    }
+  
+    .field-group {
+      padding: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .modal-content {
+      margin: 1% auto;
+      max-height: 98vh;
+      transform: translateY(-5px);
+      border-radius: 12px;
+    }
+  }
+
+  /* Delete Modal (untouched) */
+  #deleteModal {
+    z-index: 1000;
+  }
+  
+  #deleteModal .modal-content {
+    width: 30%;
+    margin: 15% auto;
+  }
+  
+  /* Add Student Modal */
+  #addStudentModal {
+    z-index: 1001;
+  }
+  
+  #addStudentForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 20px;
+  }
+  
+  /* Full width elements */
+  .full-width {
+    grid-column: span 2;
+  }
+  
+  
+  /* Inputs & selects */
+  .modal-content input,
+  .modal-content select {
+    width: 100%;
+    min-width: 200px; /* Set minimum width to accommodate "Inferential" option */
+    padding: 10px;
+    margin-top: 4px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .modal-content label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  
+  .modal-content input:focus,
+  .modal-content select:focus {
+    outline: none;
+    border: 1px solid var(--primary) !important;
+    box-shadow: 0 0 5px var(--primary) !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+  
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #000000 !important;
+  }
+  
+  /* Name group layout */
+  .name-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
+    gap: 10px;
+  }
+  
+  .name-group input {
+    min-width: 0;
+  }
+  
+  /* Smaller fields (MI and Suffix) */
+  .smaller-input {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+  
+  /* Address group layout */
+  .address-group {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  
+  /* Street Address full width */
+  #street {
+    grid-column: span 4;
+  }
+  
+  
+  /* Responsive tweaks */
+  @media (max-width: 767px) {
+    #addStudentForm {
+      grid-template-columns: 1fr;
+    }
+  
+    .full-width {
+      grid-column: span 1;
+    }
+  
+    .name-group,
+    .address-group {
+      grid-template-columns: 1fr 1fr;
+    }
+  
+    #street {
+      grid-column: span 2;
+    }
+  }
+  
+   /* Style for all select elements */
+    select {
+      width: 100%;
+      min-width: 200px; /* Set minimum width to accommodate "Inferential" option */
+      padding: 12px;
+      font-size: 14px;
+      border: 1px solid var(--primary);
+      border-radius: 8px;
+      background-color: var(--light);
+      color: var(--dark);
+      outline: none;
+      transition: border-color 0.3s ease;
+      margin-bottom: 16px;
+    }
+  
+    select:hover,
+    select:focus {
+      border-color: var(--secondary);
+    }
+  
+    /* Form group container */
+   /* Add or update this in your CSS */
+  .form-group {
+    display: flex;
+    flex-direction: row;      /* Make label and select side by side */
+    align-items: center;      /* Vertically center */
+    gap: 10px;                /* Space between label and select */
+    width: 100%;
+  }
+  
+    label {
+      font-size: 16px;
+      color: var(--primary);
+      display: block;
+      margin-bottom: 8px;
+    }
+  
+    /* Button styling */
+    button {
+      background-color: var(--primary);
+      color: var(--light);
+      font-size: 16px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+  
+    button:hover {
+      background-color: var(--secondary);
+    }
+  
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      .container {
+        padding: 16px;
+      }
+  
+      select {
+        padding: 10px;
+        font-size: 13px;
+      }
+  
+      button {
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+    }
+
+    /* Form groups in modal: Stack label and input */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+  }
+
+  /* ComboBox Form */
+  .form-container {
+    display: grid;
+    gap: 10px;
+    max-width: 500px;
+    margin: auto;
+  }
+  
+  .form-container .form-group {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .form-container .form-group label {
+    min-width: 120px;
+    margin-bottom: 0;
+  }
+  
+  .form-group label {
+    min-width: 120px;         /* Or whatever width you want for labels */
+    margin-bottom: 0;         /* Remove bottom margin for horizontal layout */
+    font-weight: bold;
+  }
+  
+  .h4 {
+    min-width: 120px;         /* Or whatever width you want for labels */
+    margin-bottom: 0;         /* Remove bottom margin for horizontal layout */
+    font-weight: bold;
+  }
+  
+  /* ComboBox Form */
+  .form-container .form-group select {
+      flex: 1;
+      min-width: 200px; /* Set minimum width to accommodate "Inferential" option */
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 5px; /* Make the borders rounded */
+      border: 1px solid var(--primary); /* Set the primary border color */
+      background-color: var(--light);
+      transition: border-color 0.3s ease; /* Smooth transition for border color */
+  }
+  
+  .form-container .form-group select:hover {
+      border-color: var(--secondary); /* Secondary border color on hover */
+  }
+  
+  .form-container .form-group select:focus {
+      border-color: var(--secondary); /* Secondary border color on focus */
+      outline: none; /* Remove the default outline on focus */
+  }
+  
+  .form-container .form-group select:hover, 
+  .form-container .form-group select:focus {
+      background-color: var(--light); /* Light background on hover or focus */
+  }
+  
+  .form-group select {
+    flex: 1;                  /* Select takes remaining space */
+  }
+  
+  /* Utility Classes */
+  .hidden {
+    display: none !important;
+  }
+  
+
+  h2.headings,
+  .headings{
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    text-align: center !important;
+    margin-top: 80px !important;
+    font-size: 28px !important;
+    color: var(--primary) !important;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    letter-spacing: 0 !important;
+    position: relative !important;
+    z-index: 10 !important;
+  }
+  
+  .modal-header {
+    text-align: center !important;
+    margin-bottom: 20px !important;
+    font-size: 27px !important;
+    color: var(--primary) !important;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    letter-spacing: 0 !important;
+  }
+  .modal-content h3,
+  .modal-content h4 {
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    margin-bottom: 4px !important;
+    color: var(--primary) !important;
+    display: block !important;
+  }
+
+  /* 
+  .container h2, .content h2, .main-wrapper h2, body h2 {
+    text-align: center !important;
+    margin-bottom: 20px !important;
+    font-size: 28px !important;
+    color: var(--primary) !important;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    letter-spacing: 0 !important;
+  }
+  
+  
+  .modal-content h3,
+  .modal-content h4 {
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    margin-bottom: 4px !important;
+    color: var(--primary) !important;
+    display: block !important;
+  }
+  
+  
+  @media print {
+    .sidebar,
+    .toggle-btn,
+    .modal,
+    .modal-content,
+    .button-container,
+    .primary-button,
+    .primary-button.print-btn {
+      display: none !important;
+    }*/
+
+/**************************LOADER CUSTOM***********************************/
+#nprogress .bar {
+  background: var(--light) !important;
+  height: 4px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  z-index: 9999;
+}
+
+#nprogress .peg, #nprogress .spinner {
+  display: none !important;
+}
+
+
+
+
+@media print {
+  /* Hide unwanted elements */
+  .sidebar,
+  .toggle-btn,
+  .modal,
+  .modal-content,
+  .button-container,
+  .primary-button,
+  .primary-button.print-btn,
+  .top-header,
+  .headings,
+  h2.headings {
+    display: none !important;
+  }
+
+  /* Make the printed area fill the page */
+  html, body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  body {
+    margin: 0 !important; /* remove default browser print margins */
+    background: #fff !important;
+  }
+  .content {
+    position: static !important;
+    width: auto !important;
+    background: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .container {
+    max-width: 100% !important;
+    margin: 0 !important; /* align to page margin */
+    box-shadow: none !important;
+  }
+}
+
+/* Do not include elements marked as no-export */
+@media print {
+  .no-export { display: none !important; }
+}
+
+html.pdf-export .no-export {
+  display: none !important;
+}
+
+/* Mirror print layout when exporting to PDF */
+html.pdf-export header {
+  position: static !important;
+  transform: none !important;
+  box-shadow: none !important;
+  width: 100% !important;
+}
+html.pdf-export .content {
+  position: static !important;
+  width: auto !important;
+  background: #fff !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+html.pdf-export .container {
+  max-width: 100% !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+}
+/* Stack layout vertically during PDF export to mirror print */
+html.pdf-export .main-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Freeze layout to current on-screen width during export/print */
+html.export-freeze #reportContainer,
+html.export-freeze #reportContainer .container {
+  width: var(--export-width-px) !important;
+  max-width: var(--export-width-px) !important;
+}
+
+@media print {
+  /* When printing, if export-freeze is active, keep frozen width */
+  html.export-freeze #reportContainer,
+  html.export-freeze #reportContainer .container {
+    width: var(--export-width-px) !important;
+    max-width: var(--export-width-px) !important;
+  }
+}
+html.pdf-export .sidebar,
+html.pdf-export .toggle-btn,
+html.pdf-export .modal,
+html.pdf-export .modal-content,
+html.pdf-export .button-container,
+html.pdf-export .primary-button,
+html.pdf-export .primary-button.print-btn,
+html.pdf-export .top-header,
+html.pdf-export .headings,
+html.pdf-export h2.headings {
+  display: none !important;
+}
+
+/* FIX OPACITY ISSUES FOR PDF EXPORT - Override all fade animations and opacity settings */
+html.pdf-export .report-wrapper,
+html.pdf-export .report-content,
+html.pdf-export .report-header,
+html.pdf-export .report-footer,
+html.pdf-export .generated-report,
+html.pdf-export .report-summary,
+html.pdf-export #report,
+html.pdf-export #reportSummary,
+html.pdf-export #generatedReport,
+html.pdf-export .section,
+html.pdf-export .chart,
+html.pdf-export #reportChart,
+html.pdf-export table,
+html.pdf-export th,
+html.pdf-export td,
+html.pdf-export h1, 
+html.pdf-export h2, 
+html.pdf-export h3, 
+html.pdf-export h4, 
+html.pdf-export h5, 
+html.pdf-export h6,
+html.pdf-export p, 
+html.pdf-export div, 
+html.pdf-export span {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+  transition: none !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* Ensure tables are visible in PDF export */
+html.pdf-export table {
+  display: table !important;
+  opacity: 1 !important;
+}
+
+html.pdf-export th, 
+html.pdf-export td {
+  display: table-cell !important;
+  opacity: 1 !important;
+}
+
+/* FIX OPACITY ISSUES FOR WORD EXPORT - Override all fade animations and opacity settings */
+html.word-export .report-wrapper,
+html.word-export .report-content,
+html.word-export .report-header,
+html.word-export .report-footer,
+html.word-export .generated-report,
+html.word-export .report-summary,
+html.word-export #report,
+html.word-export #reportSummary,
+html.word-export #generatedReport,
+html.word-export .section,
+html.word-export .chart,
+html.word-export #reportChart,
+html.word-export table,
+html.word-export th,
+html.word-export td,
+html.word-export h1, 
+html.word-export h2, 
+html.word-export h3, 
+html.word-export h4, 
+html.word-export h5, 
+html.word-export h6,
+html.word-export p, 
+html.word-export div, 
+html.word-export span {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+  transition: none !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* Ensure tables are visible in Word export */
+html.word-export table {
+  display: table !important;
+  opacity: 1 !important;
+}
+
+html.word-export th, 
+html.word-export td {
+  display: table-cell !important;
+  opacity: 1 !important;
+}
+
+/* Override compact table styling in PDF export mode */
+html.pdf-export table.report-table.compact-table,
+html.pdf-export table.report-table.compact-1-col,
+html.pdf-export table.report-table.compact-2-col {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 0 20px 0 !important;
+}
+
+.export-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.export-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 10;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--primary);
+  color: var(--light);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.export-btn:hover {
+  background-color: var(--secondary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure consistent spacing between icon and text for Print button */
+.print-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 10;
+}
+
+.export-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  min-width: 180px;
+  background: var(--light);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(30,30,30,0.12);
+  padding: 8px 0;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.25s cubic-bezier(.4,0,.2,1), transform 0.25s cubic-bezier(.4,0,.2,1);
+}
+
+.export-dropdown.open .export-menu {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.export-option {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 15px;
+  padding: 10px 20px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.export-option:hover {
+  background: var(--secondary);
+  color: var(--light);
+}
+
+.export-btn .bi-chevron-down,
+.export-btn .bi-caret-down {
+  font-size: 1em;
+  transition: transform 0.2s;
+}
+
+.export-dropdown.open .export-btn .bi-chevron-down,
+.export-dropdown.open .export-btn .bi-caret-down {
+  transform: rotate(180deg);
+}
+
+/****************************************** Top Header ******************************************/
+.top-header {
+  background-color: var(--primary);
+  color: var(--light);
+  display: flex;
+  justify-content: flex-start; /* Keep content aligned to the left */
+  align-items: center;
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 50px;
+}
+
+.top-header.header-hidden {
+  transform: translateY(-100%);
+}
+
+.top-header img {
+  margin-left: 30px;
+  max-height: 50px;
+  width: auto;
+}
+
+.top-header a {
+  color: var(--light);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+/* Responsive select elements for smaller screens */
+@media (max-width: 768px) {
+  .form-container .form-group select {
+    min-width: 150px; /* Smaller minimum width on tablets */
+  }
+  
+  input, select {
+    min-width: 150px; /* Smaller minimum width on tablets */
+  }
+  
+  .modal-content input,
+  .modal-content select {
+    min-width: 150px; /* Smaller minimum width on tablets */
+  }
+  
+  select {
+    min-width: 150px; /* Smaller minimum width on tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container .form-group select {
+    min-width: 120px; /* Even smaller minimum width on phones */
+  }
+  
+  input, select {
+    min-width: 120px; /* Even smaller minimum width on phones */
+  }
+  
+  .modal-content input,
+  .modal-content select {
+    min-width: 120px; /* Even smaller minimum width on phones */
+  }
+  
+  select {
+    min-width: 120px; /* Even smaller minimum width on phones */
+  }
+}
+
+/* Enhanced Loading Animation Styles */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  margin: 20px 0;
+  min-height: 300px;
+  /* Viewport-based responsive sizing */
+  min-height: max(300px, 50vh);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.loading-spinner {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 30px;
+}
+
+.spinner-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 4px solid transparent;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+
+.spinner-ring:nth-child(1) {
+  border-top-color: var(--primary);
+  animation-delay: 0s;
+}
+
+.spinner-ring:nth-child(2) {
+  border-right-color: var(--secondary);
+  animation-delay: 0.3s;
+  width: 60px;
+  height: 60px;
+  top: 10px;
+  left: 10px;
+}
+
+.spinner-ring:nth-child(3) {
+  border-bottom-color: var(--faded);
+  animation-delay: 0.6s;
+  width: 40px;
+  height: 40px;
+  top: 20px;
+  left: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  margin-bottom: 30px;
+}
+
+.loading-text h3 {
+  color: var(--primary);
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.loading-text p {
+  color: var(--dark);
+  font-size: 16px;
+  margin: 0 0 20px 0;
+  opacity: 0.8;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.loading-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.loading-dots span {
+  width: 12px;
+  height: 12px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  animation: bounce 1.4s ease-in-out infinite both;
+}
+
+.loading-dots span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.loading-dots span:nth-child(3) {
+  animation-delay: 0s;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.loading-progress {
+  width: 100%;
+  max-width: 300px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background-color: #e9ecef;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 3px;
+  animation: progress 2s ease-in-out infinite;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes progress {
+  0% { width: 0%; }
+  50% { width: 70%; }
+  100% { width: 100%; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-text {
+  color: var(--dark);
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+/* Responsive adjustments for loading animation */
+@media (max-width: 768px) {
+  .loading-container {
+    padding: 30px 15px;
+    min-height: max(250px, 40vh);
+    align-items: flex-start;
+    text-align: left;
+    padding-left: 20px;
+  }
+  
+  .loading-spinner {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+  }
+  
+  .spinner-ring:nth-child(2) {
+    width: 45px;
+    height: 45px;
+    top: 7.5px;
+    left: 7.5px;
+  }
+  
+  .spinner-ring:nth-child(3) {
+    width: 30px;
+    height: 30px;
+    top: 15px;
+    left: 15px;
+  }
+  
+  .loading-text h3 {
+    font-size: 20px;
+  }
+  
+  .loading-text p {
+    font-size: 14px;
+  }
+  
+  .loading-dots {
+    justify-content: flex-start;
+  }
+}
+
+/* Enhanced responsive loading for smaller screens */
+@media (max-width: 640px) {
+  .loading-container {
+    padding: 25px 12px;
+    min-height: max(200px, 35vh);
+    align-items: flex-start;
+    text-align: left;
+    padding-left: 15px;
+  }
+  
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
+  }
+  
+  .spinner-ring:nth-child(2) {
+    width: 37.5px;
+    height: 37.5px;
+    top: 6.25px;
+    left: 6.25px;
+  }
+  
+  .spinner-ring:nth-child(3) {
+    width: 25px;
+    height: 25px;
+    top: 12.5px;
+    left: 12.5px;
+  }
+  
+  .loading-text h3 {
+    font-size: 18px;
+  }
+  
+  .loading-text p {
+    font-size: 13px;
+  }
+  
+  .loading-dots {
+    justify-content: flex-start;
+  }
+  
+  .loading-dots span {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loading-container {
+    padding: 20px 10px;
+    min-height: max(180px, 30vh);
+    align-items: flex-start;
+    text-align: left;
+    padding-left: 12px;
+  }
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 12px;
+  }
+  
+  .spinner-ring:nth-child(2) {
+    width: 30px;
+    height: 30px;
+    top: 5px;
+    left: 5px;
+  }
+  
+  .spinner-ring:nth-child(3) {
+    width: 20px;
+    height: 20px;
+    top: 10px;
+    left: 10px;
+  }
+  
+  .loading-text h3 {
+    font-size: 16px;
+  }
+  
+  .loading-text p {
+    font-size: 12px;
+  }
+  
+  .loading-dots {
+    justify-content: flex-start;
+  }
+  
+  .loading-dots span {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .loading-container {
+    padding: 15px 8px;
+    min-height: max(150px, 25vh);
+    align-items: flex-start;
+    text-align: left;
+    padding-left: 10px;
+  }
+  
+  .loading-spinner {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 10px;
+  }
+  
+  .spinner-ring:nth-child(2) {
+    width: 26.25px;
+    height: 26.25px;
+    top: 4.375px;
+    left: 4.375px;
+  }
+  
+  .spinner-ring:nth-child(3) {
+    width: 17.5px;
+    height: 17.5px;
+    top: 8.75px;
+    left: 8.75px;
+  }
+  
+  .loading-text h3 {
+    font-size: 14px;
+  }
+  
+  .loading-text p {
+    font-size: 11px;
+  }
+  
+  .loading-dots {
+    justify-content: flex-start;
+  }
+  
+  .loading-dots span {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+/* Report Fade-in Animation - REMOVED */
+
+/* Smooth transition for report content - REMOVED */
+
+/* Enhanced report wrapper animation - REMOVED */
+
+/* Hide report content during loading - Simple display toggle */
+.report-header,
+footer,
+.generated-report {
+  display: none !important;
+}
+
+/* Show classes - Simple display toggle */
+.report-header.show,
+footer.show,
+.generated-report.show {
+  display: block !important;
+}
+
+/* @keyframes reportWrapperFadeIn - REMOVED */
+
+/* COMPREHENSIVE OPACITY FIX FOR ALL EXPORT/PRINT SCENARIOS */
+/* This ensures that any element that might have opacity issues is properly visible in exports */
+@media print, screen and (max-width: 0) {
+  /* This media query will never match, but it serves as a fallback */
+  .report-wrapper,
+  .report-content,
+  .report-header,
+  .report-footer,
+  .generated-report,
+  .report-summary,
+  #report,
+  #reportSummary,
+  #generatedReport,
+  .section,
+  .chart,
+  #reportChart,
+  table,
+  th,
+  td,
+  h1, h2, h3, h4, h5, h6,
+  p, div, span {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+    visibility: visible !important;
+  }
+}
+
+/* Additional safety net for any missed elements */
+@media print {
+  * {
+    opacity: 1 !important;
+  }
+  
+  /* But preserve the fade animations for screen display */
+  .report-fade-in,
+  .report-content,
+  .report-header,
+  .report-footer,
+  .generated-report {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* TARGETED OPACITY FIX - Only for print/export scenarios */
+@media print {
+  /* Force full opacity ONLY during print */
+  .section,
+  .generated-report,
+  .report-summary,
+  #reportSummary,
+  #generatedReport,
+  .report-content,
+  .report-header,
+  .report-footer,
+  .report-fade-in {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  /* Ensure tables are visible in print */
+  table, th, td {
+    opacity: 1 !important;
+    display: table !important;
+  }
+  
+  th, td {
+    display: table-cell !important;
+  }
+}
+
+/* PDF Export opacity fix */
+html.pdf-export .section,
+html.pdf-export .generated-report,
+html.pdf-export .report-summary,
+html.pdf-export #reportSummary,
+html.pdf-export #generatedReport,
+html.pdf-export .report-content,
+html.pdf-export .report-header,
+html.pdf-export .report-footer,
+html.pdf-export .report-fade-in {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+/* Word Export opacity fix */
+html.word-export .section,
+html.word-export .generated-report,
+html.word-export .report-summary,
+html.word-export #reportSummary,
+html.word-export #generatedReport,
+html.word-export .report-content,
+html.word-export .report-header,
+html.word-export .report-footer,
+html.word-export .report-fade-in {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+/* Export freeze opacity fix */
+html.export-freeze .section,
+html.export-freeze .generated-report,
+html.export-freeze .report-summary,
+html.export-freeze #reportSummary,
+html.export-freeze #generatedReport,
+html.export-freeze .report-content,
+html.export-freeze .report-header,
+html.export-freeze .report-footer,
+html.export-freeze .report-fade-in {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+/* UNIFIED MODAL COMBOBOX WIDTH STYLING */
+/* This ensures all modal comboboxes have the same width while maintaining responsiveness */
+.modal .form-container .form-group select,
+.modal .form-group select,
+.modal select {
+  width: 100% !important;
+  min-width: 250px !important;
+  max-width: 300px !important;
+  box-sizing: border-box !important;
+}
+
+/* Responsive adjustments for unified modal comboboxes */
+@media (max-width: 768px) {
+  .modal .form-container .form-group select,
+  .modal .form-group select,
+  .modal select {
+    width: 100% !important;
+    min-width: 180px !important;
+    max-width: 220px !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Optimize labels for tablets */
+  .modal .form-container .form-group label,
+  .modal .form-group label {
+    font-size: 13px !important;
+    min-width: 90px !important;
+    max-width: 100px !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    line-height: 1.2 !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .modal .form-container .form-group select,
+  .modal .form-group select,
+  .modal select {
+    width: 100% !important;
+    min-width: 160px !important;
+    max-width: 200px !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Further optimize labels for smaller screens */
+  .modal .form-container .form-group label,
+  .modal .form-group label {
+    font-size: 12px !important;
+    min-width: 80px !important;
+    max-width: 90px !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    line-height: 1.2 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal .form-container .form-group select,
+  .modal .form-group select,
+  .modal select {
+    width: 100% !important;
+    min-width: 140px !important;
+    max-width: 180px !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Compact labels for mobile */
+  .modal .form-container .form-group label,
+  .modal .form-group label {
+    font-size: 11px !important;
+    min-width: 70px !important;
+    max-width: 80px !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    line-height: 1.2 !important;
+  }
+  
+  /* Ensure modal content fits properly */
+  .modal-content {
+    padding: 15px !important;
+    margin: 10px !important;
+  }
+  
+  .modal .form-container {
+    gap: 8px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .modal .form-container .form-group select,
+  .modal .form-group select,
+  .modal select {
+    width: 100% !important;
+    min-width: 120px !important;
+    max-width: 160px !important;
+    font-size: 13px !important;
+    padding: 6px 8px !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Very compact labels for small screens */
+  .modal .form-container .form-group label,
+  .modal .form-group label {
+    font-size: 10px !important;
+    min-width: 60px !important;
+    max-width: 70px !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    line-height: 1.2 !important;
+  }
+  
+  .modal-content {
+    padding: 10px !important;
+    margin: 5px !important;
+  }
+}
+
+/* Scroll Notification Banner Styles */
+.scroll-notification {
+  position: fixed;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #5c297c, #7c3a9c);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(92, 41, 124, 0.3);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  max-width: 90%;
+  text-align: center;
+  animation: slideDown 0.3s ease-out;
+  white-space: nowrap;
+}
+
+.scroll-notification.show {
+  display: flex;
+}
+
+.scroll-notification .icon {
+  font-size: 18px;
+  animation: bounce 2s infinite;
+}
+
+.scroll-notification .close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 10px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.scroll-notification .close-btn:hover {
+  opacity: 1;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-3px);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Mobile-specific adjustments for notification */
+@media (max-width: 768px) {
+  .scroll-notification {
+    top: 80px;
+    padding: 8px 12px;
+    font-size: 11px;
+    border-radius: 18px;
+    max-width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .scroll-notification .icon {
+    font-size: 14px;
+  }
+  
+  .scroll-notification .close-btn {
+    font-size: 14px;
+    margin-left: 6px;
+  }
+}

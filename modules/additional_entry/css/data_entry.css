@@ -1,0 +1,1911 @@
+/********************************BODY CUSTOM***********************************/
+:root {
+  --primary: #5c297c;
+  --secondary: #ffb736;
+  --light: #FFFFFF;
+  --dark: #1d1a27;
+  --warning: #ed1c24;
+  --faded: #60357a;
+}
+
+/* Modal animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-30px); }
+}
+
+
+body {
+  font-family: Montserrat, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: var(--light);
+  background-image: radial-gradient(#ccc 1px, transparent 1px);
+  background-size: 20px 20px;
+  position: relative;
+  height: 100vh;
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%);
+  z-index: 0;
+}
+
+.main-wrapper {
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  transition: padding-left 0.3s ease;
+  background: transparent;
+  max-width: 100%;
+  box-sizing: border-box;
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.content.fade-in {
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container-wrapper {
+  margin-top: 70px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  transition: transform 0.3s ease; /* smooth move */
+  will-change: transform; /* hint for better animation */
+}
+
+.container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  background: var(--light);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(92, 41, 124, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+h2 {
+  text-align: center !important;
+  margin-bottom: 30px !important;
+  font-size: 32px !important;
+  color: var(--primary) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.5px !important;
+  position: relative;
+  z-index: 1;
+}
+
+
+
+
+input, select {
+  padding: 12px;
+  width: 45%;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+input:hover, select:hover {
+  box-shadow: 1px 1px 5px var(--primary);
+}
+
+div label {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.row label {
+  white-space: normal;
+  word-break: break-word;
+  max-width: 150px;
+}
+
+/* ComboBox Form */
+.form-container {
+  display: grid;
+  gap: 10px;
+  max-width: 500px;
+  margin: auto;
+}
+
+.form-container .form-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-container .form-group label {
+  width: 120px; /* Consistent label width */
+  font-weight: bold;
+}
+
+/* ComboBox Form */
+.form-container .form-group select {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 5px; /* Make the borders rounded */
+    border: 1px solid var(--primary); /* Set the primary border color */
+    background-color: var(--light);
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+.form-container .form-group select:hover {
+    border-color: var(--secondary); /* Secondary border color on hover */
+}
+
+.form-container .form-group select:focus {
+    border-color: var(--secondary); /* Secondary border color on focus */
+    outline: none; /* Remove the default outline on focus */
+}
+
+.form-container .form-group select:hover, 
+.form-container .form-group select:focus {
+    background-color: var(--light); /* Light background on hover or focus */
+}
+
+.logo {
+  width: 60px;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background: var(--primary);
+  color: var(--light);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: var(--secondary);
+}
+
+.btn-clear {
+  background-color: var(--light) !important;  /* override primary */
+  color: #666666 !important;
+  border: 1px solid #ddd !important;
+}
+
+.btn-clear:hover {
+  background-color: var(--secondary) !important;
+  color: var(--light) !important;
+  border-color: var(--secondary) !important;
+}
+
+.note {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--warning);
+  text-align: left;
+}
+
+
+
+/**************************LOADER CUSTOM***********************************/
+#nprogress .bar {
+  background: var(--light) !important;
+  height: 4px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  z-index: 9999;
+}
+
+#nprogress .peg, #nprogress .spinner {
+  display: none !important;
+}
+
+/* Circular loader for modal save button */
+.loader {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.loader.show {
+  display: inline-block;
+}
+
+/* Hide button text when loader is showing and center the loader */
+#confirmSave.loading {
+  color: transparent !important;
+  position: relative;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+/* Disabled button styling for modal buttons */
+#confirmSave:disabled,
+#cancelSave:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+/* Add smooth transitions for modal buttons */
+#confirmSave,
+#cancelSave {
+  transition: opacity 0.3s ease, cursor 0.2s ease;
+}
+
+#confirmSave.loading .loader {
+  display: block !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 2px solid #f3f3f3 !important;
+  border-top: 2px solid var(--primary) !important;
+  border-radius: 50% !important;
+  animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+
+/****************************************** Header ******************************************/
+header {
+  background-color: var(--primary);
+  color: var(--light);
+  display: flex;
+  justify-content: flex-start; /* Keep content aligned to the left */
+  align-items: center;
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header.header-hidden {
+  transform: translateY(-100%);
+}
+
+header img {
+  margin-left: 30px;
+  max-height: 50px;
+  width: auto;
+}
+
+header a {
+  color: var(--light);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+
+
+/******************************************** SIDEBAR CUSTOM *******************************************/
+
+body .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 240px;
+  background: var(--primary);
+  color: var(--light);
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 1002 !important;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+  overflow-y: auto; /* Add scrollbar */
+}
+
+body .sidebar.open {
+  transform: translateX(0);
+}
+
+body .sidebar::-webkit-scrollbar-thumb {
+  background-color:  #491464;
+  border-radius: 10px;
+}
+
+body .sidebar::-webkit-scrollbar-thumb:hover {
+  background-color:  #491464;
+}
+
+body .sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+body .sidebar h3 {
+  margin-top: 0;
+}
+
+body .sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+body .sidebar ul li {
+  margin-bottom: 4px;
+}
+
+body .sidebar ul li a {
+  color: var(--light);
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: background-color 0.3s ease, border-radius 0.3s ease;
+}
+
+body .sidebar ul li a:hover {
+  background-color: var(--secondary);
+  color: var(--light);
+  border-radius: 15px;
+}
+
+body .sidebar ul li:last-child {
+  margin-top: auto;
+}
+
+body .logout {
+  margin-top: auto;
+  padding: 10px 20px;
+  color: var(--light);
+  font-weight: bold;
+  text-decoration: none;
+  background-color: var(--secondary);
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+body .logout:hover {
+  background-color: var(--light);
+  color: var(--dark);
+}
+
+body .toggle-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: var(--primary);
+  color: var(--light);
+  border: none;
+  padding: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 1003;
+  transition: left 0.3s ease, right 0.3s ease;
+  border-radius: 5px;
+}
+
+body .sidebar.open .toggle-btn {
+  right: 50px;
+  left: auto;
+}
+
+body .logo {
+  max-height: 50px;
+  width: auto;
+  z-index: 1;
+}
+
+body .sidebar.open ~ .content {
+  padding-left: 260px;
+}
+
+body .sidebar.open ~ .content {
+  transform: translateX(0); /* reset */
+}
+
+body .sidebar:not(.open) ~ .content{
+  transform: translateX(-20px); /* adjust as needed */
+}
+
+
+/* Dropdown Styles */
+
+body .sidebar ul li.dropdown {
+  margin-bottom: 0; /* Remove any extra space before dropdowns */
+}
+
+body .sidebar ul li.dropdown > body .sidebar ul li.dropdown-toggle {
+  cursor: pointer;
+}
+
+body .sidebar ul li.dropdown > .dropdown-menu {
+  list-style: none;
+  padding-left: 18px;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  position: static !important;
+  box-shadow: none !important;
+  background: none !important;
+  border: none !important;
+  display: block !important;
+}
+
+body .sidebar ul li.dropdown.open > .dropdown-menu {
+  max-height: 500px;
+  opacity: 1;
+  padding-top: 0;
+}
+
+body .sidebar ul li.dropdown > .dropdown-menu li {
+  margin-bottom: 2px;
+}
+
+body .sidebar ul li.dropdown > .dropdown-menu li a {
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+body .sidebar ul li.dropdown > a::after {
+  display: none;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5); /* dark transparent */
+  z-index: 998; /* lower than sidebar, higher than content */
+}
+.sidebar-overlay.active {
+  display: block;
+}
+
+
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 60px; /* Reduced padding for mobile */
+  }
+
+  .container-wrapper {
+    margin-top: 30px;
+  }
+
+  .container {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .entry-content {
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .entry-content .form-group {
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+
+  .socioeconomic-input {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .socioeconomic-input label {
+    flex: none;
+    margin-bottom: 8px;
+  }
+
+  .range-inputs {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .range-inputs input {
+    width: 100px;
+    min-width: 80px;
+  }
+
+  .details-with-checkbox {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .hide-checkbox-container {
+    justify-content: center;
+    align-self: center;
+  }
+
+  .entry-buttons {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .entry-buttons .button {
+    width: 100%;
+    padding: 12px 24px;
+  }
+  /********************************************/
+  
+  header {
+    padding: 0.5rem 1rem;
+    justify-content: flex-start;
+  }
+  
+  header img {
+    margin-left: 45px; /* Space for hamburger menu */
+    max-height: 35px; /* Smaller logo on mobile */
+  }
+  
+  body .toggle-btn {
+    left: 10px;
+    top: 12px;
+    padding: 6px;
+    font-size: 14px;
+  }
+  
+  /* Sidebar overlays content on mobile */
+  .sidebar {
+    width: 250px;
+    padding: 10px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 2000;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .sidebar:not(.open) {
+    transform: translateX(-100%);
+  }
+  /* Content is never shifted on mobile */
+  .sidebar.open ~ .content,
+  .sidebar ~ .content {
+    padding-left: 0 !important;
+    transform: none !important;
+    justify-content: center;
+  }
+  .content {
+    padding: 15px;
+    transition: none;
+  }
+  .container {
+    padding: 15px;
+  }
+  
+  body .sidebar ul li a {
+    font-size: 13px;
+    padding: 7px 10px;
+  }
+  body .sidebar ul li.dropdown > .dropdown-menu li a {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+}
+
+/* Extra Small Devices (320px and up) */
+@media (max-width: 360px) {
+  body {
+    padding-top: 50px;
+  }
+  
+  header {
+    padding: 0.4rem 0.8rem;
+  }
+  
+  header img {
+    margin-left: 40px;
+    max-height: 30px;
+  }
+  
+  body .toggle-btn {
+    left: 8px;
+    top: 10px;
+    padding: 5px;
+    font-size: 12px;
+  }
+  
+  .sidebar {
+    width: 220px;
+  }
+  
+  .content {
+    padding: 10px;
+  }
+  
+  .container {
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  /* Enhanced mobile navigation for very small screens */
+  .menu-bar .nav-link {
+    padding: 10px 4px;             /* reduced padding for small screens */
+    gap: 2px;                      /* smaller gap between icon and text */
+  }
+
+  .menu-bar .nav-link i {
+    font-size: 16px;               /* slightly smaller icons for very small screens */
+  }
+
+  .entry-content {
+    padding: 15px;
+  }
+
+  .entry-content .form-group {
+    padding: 10px;
+    margin-bottom: 12px;
+  }
+
+  .socioeconomic-input {
+    padding: 10px;
+  }
+
+  .range-inputs input {
+    width: 80px;
+    min-width: 70px;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .range-label {
+    font-size: 12px;
+  }
+
+  .details-with-checkbox {
+    padding: 10px;
+  }
+
+  .details-with-checkbox input[type="text"] {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .hide-checkbox-container {
+    padding: 6px 10px;
+  }
+
+  .hide-checkbox-container label {
+    font-size: 11px;
+  }
+
+  .entry-buttons {
+    padding: 12px;
+  }
+
+  .entry-buttons .button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+/* Sidebar logo link spacing */
+.sidebar-logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 20px 30px;
+  
+}
+
+body .sidebar .sidebar-logo-link img {
+  max-height: 50px;
+  width: auto;
+  margin: 0;
+}
+  
+  /* Profile section at the bottom */
+  .sidebar-profile {
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    padding-top: 8px; /* gap between the line and profile */
+  }
+  
+  /* Make profile-toggle behave like other list items */
+  .profile-toggle {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 8px 16px; /* same as .sidebar ul li a */
+    border-radius: 10px;
+    color: var(--light);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-radius 0.3s ease;
+  }
+  
+  /* Hover matches the other menu items */
+  .profile-toggle:hover {
+    background-color: var(--secondary);
+    border-radius: 15px;
+  }
+  
+  /* Profile overlay that covers the entire page when dropdown is open */
+  .profile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    z-index: 1000;
+    pointer-events: none;
+    transition: pointer-events 0.3s ease;
+  }
+  
+  
+  /* When profile is active, disable all interactions outside the dropdown */
+  body.profile-active .sidebar ul li a,
+  body.profile-active .profile-toggle,
+  body.profile-active .container,
+  body.profile-active .sidebar .dropdown-toggle,
+  body.profile-active .toggle-btn,
+  body.profile-active header a,
+  body.profile-active .hero-content a,
+  body.profile-active .next-page {
+    pointer-events: none;
+    cursor: default !important;
+  }
+
+    /* Allow clicking the profile toggle to collapse dropdown while open (no hover) */
+body.profile-active .profile-toggle {
+  pointer-events: auto;
+  cursor: pointer !important;
+}
+
+  /* CRITICAL: Profile dropdown must be completely excluded from disable effects */
+  body.profile-active .sidebar-profile .profile-dropdown,
+  body.profile-active .sidebar-profile .profile-dropdown *,
+  body.profile-active .sidebar-profile .profile-dropdown li,
+  body.profile-active .sidebar-profile .profile-dropdown li a {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  /* Ensure profile dropdown remains fully interactive */
+  body.profile-active .profile-dropdown,
+  body.profile-active .profile-dropdown * {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  /* Profile dropdown should be above the overlay */
+  body.profile-active .sidebar-profile {
+    z-index: 1001;
+  }
+  
+  /* Disable hover effects when profile is active */
+  body.profile-active .sidebar ul li a:hover,
+  body.profile-active .profile-toggle:hover,
+  body.profile-active .container:hover,
+  body.profile-active .sidebar .dropdown-toggle:hover {
+    background-color: inherit !important;
+    transform: none !important;
+    box-shadow: inherit !important;
+    border-color: inherit !important;
+  }
+
+  
+  
+  body.profile-active .sidebar .dropdown-toggle:hover {
+    background-color: inherit !important;
+  }
+  
+  /* Mobile adjustments */
+  @media (max-width: 768px) {
+    .profile-toggle {
+      padding: 7px 10px; /* same as mobile sidebar links */
+      font-size: 13px;
+    }
+    .profile-dropdown li a {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+  }
+  
+.profile-img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 2px solid var(--light);
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.profile-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  font-weight: bold;
+  font-size: 14px;
+  color: var(--light);
+}
+
+.profile-position {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6); /* greyed out */
+  margin-top: 2px;
+}
+
+/* Dropdown menu above profile */
+.profile-dropdown {
+  list-style: none;
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  background: var(--faded);
+  border-radius: 8px;
+  padding: 5px 0;
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
+}
+
+.profile-dropdown li a {
+  display: block;
+  padding: 8px 16px;
+  color: var(--light);
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.profile-dropdown li a:hover {
+  background-color: var(--secondary);
+  border-radius: 8px;
+}
+
+/* When open */
+.sidebar-profile.open .profile-dropdown {
+  max-height: 200px;
+  opacity: 1;
+}
+  
+/* IMPORTANT: Profile dropdown hover effects should ALWAYS work, even when profile is active */
+.profile-dropdown li a:hover,
+body.profile-active .profile-dropdown li a:hover,
+body.profile-active .sidebar-profile .profile-dropdown li a:hover {
+  background-color: var(--secondary) !important;
+  border-radius: 8px !important;
+}
+
+/* Ensure profile dropdown links are always clickable and have pointer cursor */
+.profile-dropdown li a,
+body.profile-active .profile-dropdown li a,
+body.profile-active .sidebar-profile .profile-dropdown li a {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+  
+
+
+
+/* EMKFJGLDKAG */
+/* Socioeconomic ranges layout */
+.socioeconomic-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  border: 1px solid rgba(92, 41, 124, 0.08);
+  transition: all 0.3s ease;
+}
+
+.socioeconomic-input:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(92, 41, 124, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(92, 41, 124, 0.1);
+}
+
+.socioeconomic-input label {
+  flex: 0 0 160px; /* consistent label width */
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--primary);
+  letter-spacing: 0.3px;
+}
+
+.range-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.range-inputs input {
+  width: 120px; /* consistent input size */
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid rgba(92, 41, 124, 0.2);
+  border-radius: 6px;
+  text-align: right;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.range-inputs input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(92, 41, 124, 0.1);
+  background: rgba(255, 255, 255, 1);
+}
+
+/* Validation error styling for socioeconomic inputs */
+.range-inputs input.error {
+  border-color: #c33 !important;
+  border-width: 2px !important;
+  box-shadow: 0 0 0 2px rgba(204, 51, 51, 0.2) !important;
+  background: rgba(255, 240, 240, 0.8) !important;
+}
+
+/* Error message container styling */
+#socioeconomicErrorContainer {
+  margin-top: 15px;
+  padding: 12px;
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 6px;
+  color: #c33;
+  font-size: 14px;
+  display: none;
+  animation: slideDown 0.3s ease-out;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  white-space: normal;
+  box-sizing: border-box;
+}
+
+/* General error container responsive styling */
+[id$="ErrorContainer"], 
+[id$="Error"],
+.error-container {
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  max-width: 100% !important;
+  white-space: normal !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+/* Responsive error container adjustments */
+@media (max-width: 768px) {
+  [id$="ErrorContainer"], 
+  [id$="Error"],
+  .error-container {
+    padding: 10px !important;
+    font-size: 13px !important;
+    margin-top: 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  [id$="ErrorContainer"], 
+  [id$="Error"],
+  .error-container {
+    padding: 8px !important;
+    font-size: 12px !important;
+    margin-top: 8px !important;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.range-label {
+  font-size: 14px;
+  color: var(--primary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/*JIODAJGOIAEJGOISDJGOISEJHOIQJOHIJAEOIHJAEOR*/
+
+
+.entry-content {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  overflow-y: auto;
+  animation: fadeIn 0.5s ease-in-out;
+  position: relative;
+  border: 1px solid rgba(92, 41, 124, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+/* Modal Form */
+.entry-content form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* Form groups in modal: Stack label and input */
+.entry-content .form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  border: 1px solid rgba(92, 41, 124, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.entry-content .form-group:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(92, 41, 124, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 12px rgba(92, 41, 124, 0.1);
+}
+
+.entry-content .form-group::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
+  border-radius: 3px 0 0 3px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.entry-content .form-group:hover::before {
+  opacity: 1;
+}
+
+/* Specific styling for the input field in modal */
+.entry-content .form-group input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+}
+
+/* Styling for the buttons in modal */
+.entry-content .modal-buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Full width elements */
+.full-width {
+  grid-column: span 2;
+}
+
+/* Inputs & selects */
+.entry-content input,
+.entry-content select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.entry-content label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--primary);
+  display: block;
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+  position: relative;
+}
+
+.entry-content label::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--secondary);
+  transition: width 0.3s ease;
+}
+
+.entry-content .form-group:hover label::after {
+  width: 30px;
+}
+
+.entry-content input:focus,
+.entry-content select:focus {
+  outline: none;
+  border: 1px solid var(--primary) !important;
+  box-shadow: 0 0 5px var(--primary) !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* Modal buttons */
+.entry-buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  grid-column: span 2;
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(248, 250, 252, 0.8));
+  border-radius: 12px;
+  border: 1px solid rgba(92, 41, 124, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.entry-buttons .button {
+  padding: 10px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Ensure button container maintains centering when dynamically shown/hidden */
+.entry-buttons[style*="display: block"],
+.entry-buttons[style*="display: flex"] {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Force centering for any entry-buttons that are visible */
+.entry-buttons:not([style*="display: none"]) {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Additional Details with Hide Checkbox */
+.details-with-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  border: 1px solid rgba(92, 41, 124, 0.08);
+  transition: all 0.3s ease;
+}
+
+.details-with-checkbox:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(92, 41, 124, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(92, 41, 124, 0.1);
+}
+
+.details-with-checkbox input[type="text"] {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid rgba(92, 41, 124, 0.2);
+  border-radius: 6px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.details-with-checkbox input[type="text"]:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(92, 41, 124, 0.1);
+  background: rgba(255, 255, 255, 1);
+}
+
+.details-with-checkbox input[type="text"]:focus {
+  outline: none;
+  border: 1px solid var(--primary) !important;
+  box-shadow: 0 0 5px var(--primary) !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.hide-checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 8px 12px;
+  background: rgba(92, 41, 124, 0.05);
+  border-radius: 6px;
+  border: 1px solid rgba(92, 41, 124, 0.1);
+  transition: all 0.3s ease;
+}
+
+.hide-checkbox-container:hover {
+  background: rgba(92, 41, 124, 0.1);
+  border-color: rgba(92, 41, 124, 0.2);
+}
+
+.hide-checkbox-container input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.hide-checkbox-container label {
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: 500;
+  cursor: pointer;
+  margin: 0;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+
+/* Responsive adjustments for checkbox */
+@media (max-width: 600px) {
+  .details-with-checkbox {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .hide-checkbox-container {
+    justify-content: center;
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 767px) {
+
+  .full-width,
+  .entry-buttons {
+    grid-column: span 1;
+  }
+
+}
+  
+
+/*******************************BUTTONS DOWN BELOW CUSTOM***********************************/
+.button-container {
+  display: flex;
+  justify-content: flex-start; /* align to the left */
+  gap: 10px; /* space between buttons */
+}
+
+.button {
+  background-color: var(--primary);
+  color: var(--light);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: var(--secondary);
+}
+
+.delete-confirm {
+  background-color: var(--warning);
+  color: var(--light);
+}
+
+.cancel-delete {
+  background-color: var(--primary);
+  color: var(--light);
+  margin-left: 10px;
+}
+
+/*******************************************MODAL CUSTOM********************************************/
+/* General modal styles */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center; /* For flex centering */
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow: auto;
+}
+
+.modal.show {
+  display: flex; /* Only show when .show is added */
+}
+/* When closing */
+.modal.closing .modal-content {
+  animation: fadeOut 0.5s ease-in-out forwards;
+}
+.modal-content {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95));
+  margin: auto;
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: fadeIn 0.5s ease-in-out;
+  position: relative;
+  border: 1px solid rgba(92, 41, 124, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(20px);
+}
+
+/* Modal Form */
+.modal-content form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* Form groups in modal: Stack label and input */
+.modal-content .form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 5px;
+}
+
+/* Specific styling for the input field in modal */
+.modal-content .form-group input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+}
+
+/* Styling for the buttons in modal */
+.modal-content .modal-buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Full width elements */
+.full-width {
+  grid-column: span 2;
+}
+
+/* Inputs & selects */
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-content label {
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+  outline: none;
+  border: 1px solid var(--primary) !important;
+  box-shadow: 0 0 5px var(--primary) !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+
+/* Modal buttons */
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  grid-column: span 2;
+}
+
+.modal-buttons .button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Responsive tweaks */
+@media (max-width: 767px) {
+
+  .full-width,
+  .modal-buttons {
+    grid-column: span 1;
+  }
+
+}
+
+
+
+/* === Bootstrap Override Fixes === */
+
+/* Fix h2 heading style */
+.container h2, .content h2, .main-wrapper h2, body h2 {
+  text-align: center !important;
+  margin-bottom: 20px !important;
+  font-size: 28px !important;
+  color: var(--primary) !important;
+  font-weight: bold !important;
+  font-family: 'Montserrat', sans-serif !important;
+  letter-spacing: 0 !important;
+}
+
+
+@media (max-width: 600px) {
+  .form-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap !important;
+    word-break: normal;
+    gap: 4px;
+    margin-bottom: 0;
+  }
+   .form-group label {
+    min-width: unset;
+    font-size: 13px;
+  }
+}
+@media (max-width: 400px) {
+  .btn-group {
+    flex-shrink: 0;
+    white-space: nowrap;
+    margin-left: 4px !important;
+  }
+}
+
+
+
+
+
+
+.menu-bar {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  gap: 50px;
+  padding: 20px 0;
+  border-bottom: 2px solid rgba(92, 41, 124, 0.1);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(248, 250, 252, 0.8));
+  border-radius: 12px 12px 0 0;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+/* Enhanced responsive menu bar for various screen sizes */
+
+/* Large tablets and small desktops (1024px - 1200px) */
+@media (max-width: 1200px) and (min-width: 769px) {
+  .menu-bar {
+    gap: 30px;                     /* reduced gap for medium screens */
+    padding: 18px 0;
+  }
+
+  .menu-bar .nav-link {
+    padding: 10px 16px;           /* slightly smaller padding */
+    font-size: 14px;              /* slightly smaller text */
+  }
+}
+
+/* Tablets (768px - 1024px) - iPad Air, iPad Pro, Surface Pro 7 */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .menu-bar {
+    gap: 20px;                     /* further reduced gap */
+    padding: 16px 0;
+    justify-content: space-around; /* better distribution */
+  }
+
+  .menu-bar .nav-link {
+    padding: 12px 14px;           /* optimized padding for tablets */
+    font-size: 13px;              /* smaller text for better fit */
+    min-width: 0;                  /* allow flex shrinking */
+    flex: 1;                      /* equal distribution */
+    max-width: 200px;             /* prevent excessive width */
+  }
+
+  .menu-bar .nav-link span {
+    font-size: 13px;              /* ensure text fits */
+    white-space: nowrap;          /* prevent text wrapping */
+    overflow: hidden;              /* handle overflow gracefully */
+    text-overflow: ellipsis;       /* show ellipsis if text is too long */
+  }
+}
+
+/* Mobile and small tablets (up to 768px) */
+@media (max-width: 768px) {
+  .menu-bar {
+    justify-content: center;       /* center the icons */
+    gap: 0;                        /* no gap */
+    flex: 1;
+    padding: 15px 0;              /* reduced padding for mobile */
+  }
+
+  .menu-bar .nav-link {
+    flex: 1;                       /* equal width for all tabs */
+    justify-content: center;       /* center content horizontally */
+    align-items: center;           /* center content vertically */
+    text-align: center;            /* center text */
+    padding: 12px 6px;            /* adequate padding for touch */
+    display: flex;                 /* ensure flex layout */
+    flex-direction: column;       /* stack icon and text vertically */
+    gap: 4px;                     /* small gap between icon and text */
+    min-height: 60px;             /* minimum touch target size */
+  }
+
+  .menu-bar .nav-link i {
+    font-size: 18px;              /* slightly larger icons for mobile */
+    display: block;               /* ensure icon is block element */
+  }
+
+  .menu-bar .underline {
+    height: 4px;
+  }
+}
+
+/* Small mobile devices (up to 480px) */
+@media (max-width: 480px) {
+  .menu-bar {
+    padding: 12px 0;              /* further reduced padding */
+  }
+
+  .menu-bar .nav-link {
+    padding: 10px 4px;           /* minimal padding for small screens */
+    min-height: 55px;            /* slightly smaller touch target */
+    gap: 3px;                    /* smaller gap between icon and text */
+  }
+
+  .menu-bar .nav-link i {
+    font-size: 16px;             /* slightly smaller icons */
+  }
+
+  .menu-bar .nav-link span {
+    font-size: 11px;              /* smaller text for small screens */
+  }
+}
+
+/* Foldable devices and unusual aspect ratios */
+@media (max-width: 1024px) and (max-height: 600px) {
+  .menu-bar {
+    padding: 10px 0;             /* reduced vertical padding for short screens */
+  }
+
+  .menu-bar .nav-link {
+    padding: 8px 12px;           /* optimized for landscape orientation */
+    min-height: 45px;            /* smaller touch targets for landscape */
+  }
+}
+
+/* Nest Hub and smart displays (typically 1024x600) */
+@media (max-width: 1024px) and (max-height: 700px) and (orientation: landscape) {
+  .menu-bar {
+    padding: 8px 0;              /* minimal padding for smart displays */
+    gap: 15px;                   /* reduced gap */
+  }
+
+  .menu-bar .nav-link {
+    padding: 8px 10px;           /* compact padding */
+    font-size: 12px;             /* smaller text */
+    min-height: 40px;            /* compact touch targets */
+  }
+
+  .menu-bar .nav-link span {
+    font-size: 12px;             /* ensure text fits on smart displays */
+  }
+}
+
+/* ASUS ZenBook Fold and other foldable devices */
+@media (max-width: 1024px) and (min-width: 768px) and (max-height: 800px) {
+  .menu-bar {
+    padding: 10px 0;             /* optimized for foldable screens */
+    gap: 12px;                   /* tighter spacing for foldable devices */
+  }
+
+  .menu-bar .nav-link {
+    padding: 10px 12px;          /* balanced padding for foldable */
+    font-size: 12px;             /* smaller text to fit better */
+    min-height: 42px;            /* appropriate touch target */
+    flex: 1;                     /* equal distribution */
+    max-width: 180px;            /* prevent excessive width */
+  }
+
+  .menu-bar .nav-link span {
+    font-size: 12px;             /* ensure text fits */
+    white-space: nowrap;         /* prevent wrapping */
+    overflow: hidden;           /* handle overflow */
+    text-overflow: ellipsis;     /* show ellipsis if needed */
+  }
+
+  .menu-bar .underline {
+    height: 2px;                  /* thinner underline for foldable */
+  }
+}
+
+/* Ultra-wide and unusual aspect ratios */
+@media (min-width: 1400px) and (max-height: 600px) {
+  .menu-bar {
+    justify-content: center;       /* center on ultra-wide screens */
+    gap: 40px;                   /* more spacing for wide screens */
+    padding: 12px 0;
+  }
+
+  .menu-bar .nav-link {
+    padding: 12px 24px;          /* more generous padding */
+    font-size: 15px;             /* slightly larger text */
+    min-width: 120px;            /* minimum width for better appearance */
+  }
+}
+
+/* High DPI displays optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .menu-bar .nav-link::after {
+    box-shadow: 0 1px 2px rgba(255, 183, 54, 0.3); /* sharper shadow for high DPI */
+  }
+}
+
+.menu-bar .nav-link {
+  position: relative;
+  padding: 12px 20px;
+  color: var(--primary) !important;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;              /* prevent text selection on touch */
+  -webkit-tap-highlight-color: transparent; /* remove tap highlight on mobile */
+  touch-action: manipulation;     /* optimize touch interactions */
+  min-height: 44px;              /* minimum touch target size (WCAG) */
+  justify-content: center;       /* center content for better alignment */
+}
+
+.menu-bar .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  width: 0;
+  height: 3px;
+  background-color: var(--secondary);
+  transition: width 0.3s ease, left 0.3s ease;
+  border-radius: 2px;
+}
+
+.menu-bar .nav-link:hover {
+  color: var(--secondary) !important;
+}
+
+.menu-bar .nav-link:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+.menu-bar .nav-link:active {
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+.menu-bar .nav-link.active {
+  color: var(--secondary) !important;
+  border-radius: 8px;
+}
+
+.menu-bar .nav-link.active::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Hide the old underline span element that conflicts with new design */
+.menu-bar .underline {
+  display: none !important;
+}
+
+/* Focus styles for accessibility */
+.menu-bar .nav-link:focus {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+
+.menu-bar .nav-link:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Enhanced touch feedback for mobile devices */
+@media (hover: none) and (pointer: coarse) {
+  .menu-bar .nav-link:hover {
+    color: var(--secondary) !important;
+  }
+  
+  .menu-bar .nav-link:hover::after {
+    width: 100%;
+    left: 0;
+  }
+  
+  .menu-bar .nav-link:active {
+    background: rgba(255, 183, 54, 0.1);
+    transform: scale(0.98);        /* subtle scale feedback on touch */
+  }
+}
+
+/* Responsive underline adjustments for different screen sizes */
+@media (max-width: 1024px) {
+  .menu-bar .nav-link::after {
+    height: 2.5px;              /* slightly thinner for tablets */
+    border-radius: 1.5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-bar .nav-link::after {
+    height: 4px;                /* thicker for mobile touch feedback */
+    border-radius: 2px;
+    box-shadow: 0 3px 6px rgba(255, 183, 54, 0.4); /* more prominent shadow */
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-bar .nav-link::after {
+    height: 3px;                /* medium thickness for small screens */
+    border-radius: 1.5px;
+  }
+}
+
+@media (max-width: 768px) {
+  #tab-title {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: var(--primary);
+  }
+}
+
+@media (min-width: 769px) {
+  #tab-title {
+    display: none; /* hide on larger screens */
+  }
+}
+
+

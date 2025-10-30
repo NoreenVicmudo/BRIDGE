@@ -1,0 +1,244 @@
+:root {
+    --primary: #5c297c;
+    --secondary: #ffb736;
+    --light: #FFFFFF;
+    --dark: #1d1a27;
+    --warning: #ed1c24;
+  }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+/* =====================
+   Body & Background
+   ===================== */
+body {
+    background: var(--light) radial-gradient(#ccc 1px, transparent 1px);
+    background-size: 20px 20px;
+    position: relative;
+    height: 100vh;
+}
+
+body::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%);
+}
+
+/* =====================
+   Navigation
+   ===================== */
+.go-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    color: #666666 !important;
+    border: 1px solid #ddd !important;
+    font-weight: 500;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    z-index: 5;
+}
+
+.go-back:hover {
+    background-color: var(--secondary) !important;
+    color: var(--light) !important;
+    border-color: var(--secondary) !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* =====================
+   Form Container
+   ===================== */
+.form-container {
+    background: var(--light);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 450px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: fadeIn 0.5s ease-in-out;
+    z-index: 5;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, calc(-50% - 10px)); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* =====================
+   Typography
+   ===================== */
+.form-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 25px;
+}
+
+.message {
+    font-size: 16px;
+    color: var(--warning);
+    margin: 20px 0 15px;
+}
+
+/* =====================
+   Form Elements
+   ===================== */
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-container input {
+    width: 75%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--primary);
+    outline: none;
+    font-size: 16px;
+    background: transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+.input-container label {
+    position: absolute;
+    left: 12px;
+    top: 16px;
+    font-size: 16px;
+    color: var(--primary);
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+    background: var(--light);
+    padding: 0 5px;
+}
+
+.input-container input:focus,
+.input-container input:not(:placeholder-shown) {
+    border-color: var(--secondary);
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+}
+
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label {
+    top: -8px;
+    font-size: 14px;
+    color: var(--secondary);
+}
+
+/* =====================
+   Buttons
+   ===================== */
+.btn-search {
+    padding: 12px 16px;
+    background: var(--primary);
+    color: var(--light);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    min-width: 100px; /* Ensure consistent width */
+}
+
+.btn-search:hover {
+    background: var(--secondary);
+}
+
+/* =====================
+   Loader
+   ===================== */
+.loader {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.btn-search.loading {
+    cursor: not-allowed;
+    opacity: 0.6;
+    /* Width is already maintained by the base .btn-search class */
+}
+
+/* =====================
+   Progress Bar
+   ===================== */
+#nprogress .bar {
+    background: var(--primary) !important;
+    height: 4px;
+    position: fixed;
+    inset: 0;
+    width: 100vw !important;
+    z-index: 9999;
+}
+
+#nprogress .peg, #nprogress .spinner {
+    display: none !important;
+}
+
+/* =====================
+   Responsive Design
+   ===================== */
+@media (max-width: 450px) {
+    .form-container {
+        width: 95%;
+        padding: 30px;
+    }
+
+    .input-container {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .input-container input {
+        width: 100%;
+    }
+
+    .btn-search {
+        width: 100%;
+        min-width: 100px; /* Maintain minimum width even on mobile */
+    }
+}
+
+@media (max-width: 380px) {
+    .form-title {
+        font-size: 22px;
+    }
+
+    .go-back {
+        font-size: 16px;
+        top: 15px;
+        left: 15px;
+    }
+}
