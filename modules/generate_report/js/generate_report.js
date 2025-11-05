@@ -205,7 +205,8 @@ const reportSummary = document.getElementById('reportSummary');
 
 statToolSelect.addEventListener('change', function () {
   //inputContainer.innerHTML = '';
-  reportSummary.classList.add('hidden');
+  // Don't hide reportSummary here - it should only be hidden when a new report is actually generated
+  // reportSummary.classList.add('hidden');
 
   const selected = this.value;
 
@@ -1549,6 +1550,15 @@ fetch(statisticalTreatment, {
           console.log('Showing report footer:', reportFooter);
         }
         
+        // Show report meta info (title and generated info)
+        const reportMetaInfo = document.getElementById('reportMetaInfo');
+        if (reportMetaInfo) {
+          reportMetaInfo.classList.remove('hidden');
+          reportMetaInfo.classList.add('show');
+          reportMetaInfo.style.display = ''; // Remove inline style to use CSS
+          console.log('Showing report meta info:', reportMetaInfo);
+        }
+        
         if (generatedReport) {
           generatedReport.classList.remove('hidden');
           generatedReport.classList.add('show');
@@ -2352,7 +2362,7 @@ function populateStudentField(studentInfoField, var_type) {
                                   <option value="gender">Gender</option>
                                   <option value="scholarship">Scholarship/Grant</option>
                                   <option value="language">Language Spoken at Home</option>
-                                  <option value="lastSchool">Last School Attended ${yearRange}</option>`;
+                                  <option value="lastSchool">Last School Attended</option>`;
                                   if (yearRange == 1) {studentInfoField.innerHTML += `<option value="year">Batch Year</option>`;}
   } else if (statToolInferential == 'tTestIND' && var_type == "dep") {
     studentInfoField.innerHTML = `<option value="" disabled>Select</option>

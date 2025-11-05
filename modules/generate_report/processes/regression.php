@@ -302,50 +302,44 @@ foreach ($studentYearMap as $studentNumber => $year) {
 
 // Assuming the data and the result array ($stats) are available
 $htmlDisplay = "
-    <div style='display: flex; gap: 20px; margin-bottom: 20px;'>
-        
-        <div style='flex: 1;'>
-            <h4 style='border-bottom: 1px solid #ccc; padding-bottom: 5px;'>Intermediate Calculation Components</h4>
-            <table class='report-table' style='width: 100%;'>
-                <thead>
-                    <tr>
-                        <th>Group</th>
-                        <th>X</th>
-                        <th>Y</th>
-                        <th>$\mathbf{X - M_x}$</th>
-                        <th>$\mathbf{Y - M_y}$</th>
-                        <th>$\mathbf{(X - M_x)^2}$</th>
-                        <th>$\mathbf{(X - M_x)(Y - M_y)}$</th>
-                    </tr>
-                </thead>
-                <tbody>";
+    <h4 style='border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 15px;'>Intermediate Calculation Components</h4>
+    <table class='report-table'>
+        <thead>
+            <tr>
+                <th>Group</th>
+                <th>X</th>
+                <th>Y</th>
+                <th>X - M<sub>x</sub></th>
+                <th>Y - M<sub>y</sub></th>
+                <th>(X - M<sub>x</sub>)²</th>
+                <th>(X - M<sub>x</sub>)(Y - M<sub>y</sub>)</th>
+            </tr>
+        </thead>
+        <tbody>";
 
 // Loop through the data points for the table
 // NOTE: This assumes you have 'x_minus_mean', 'y_minus_mean', 'x_diff_squared', and 'product_of_diffs' 
 //       in your $stats['table_data'], which you should copy from the pearsonR function.
 foreach ($stats['table_data'] as $row) {
-    $htmlDisplay .= "
-                    <tr>
-                        <td><b>{$row['group']}</b></td>
-                        <td>{$row['x']}</td>
-                        <td>{$row['y']}</td>
-                        <td>" . number_format($row['x_minus_mean'], 4) . "</td>
-                        <td>" . number_format($row['y_minus_mean'], 4) . "</td>
-                        <td>" . number_format($row['x_diff_squared'], 4) . "</td>
-                        <td>" . number_format($row['product_of_diffs'], 4) . "</td>
-                    </tr>";
+    $htmlDisplay .= "<tr>
+        <td><b>{$row['group']}</b></td>
+        <td>{$row['x']}</td>
+        <td>{$row['y']}</td>
+        <td>" . number_format($row['x_minus_mean'], 4) . "</td>
+        <td>" . number_format($row['y_minus_mean'], 4) . "</td>
+        <td>" . number_format($row['x_diff_squared'], 4) . "</td>
+        <td>" . number_format($row['product_of_diffs'], 4) . "</td>
+    </tr>";
 }
 
 $htmlDisplay .= "
-                    <tr>
-                        <td colspan='5'><b>Sums</b></td>
-                        <td><b>" . number_format($stats['sum_x_diff_squared'], 4) . "</b> ($\mathbf{SS_x}$)</td>
-                        <td><b>" . number_format($stats['sum_product_of_diffs'], 4) . "</b> ($\mathbf{SP}$)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+            <tr>
+                <td colspan='5'><b>Sums</b></td>
+                <td><b>" . number_format($stats['sum_x_diff_squared'], 4) . "</b> (SS<sub>x</sub>)</td>
+                <td><b>" . number_format($stats['sum_product_of_diffs'], 4) . "</b> (SP)</td>
+            </tr>
+        </tbody>
+    </table>
 
             <h3 style='text-align: center; margin-top: 0;'>Calculation Summary</h3>
             

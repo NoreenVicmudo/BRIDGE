@@ -424,6 +424,14 @@ switch ($metric2) {
         $tool = "Chi-Square Test of Independence";
         $result = chiSquareTOI(array_values($dataset1), array_values($dataset2));
 
+        if ($result['success'] == false) {
+            echo json_encode([
+                'success' => $result['success'] ?? true,
+                'error' => $result['error'] ?? '',
+            ], JSON_NUMERIC_CHECK);
+            return;
+        }
+
         $rowKeys = array_keys($result['rowTotals']);
         $colKeys = array_keys($result['colTotals']);
         $data_series = [];

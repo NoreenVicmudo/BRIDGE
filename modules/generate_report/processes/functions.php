@@ -1206,6 +1206,15 @@ function chiSquareTOI(array $arr1, array $arr2): array
         $grandTotal++;
     }
 
+    // ✅ Check if resulting categories are too few (invalid for chi-square)
+    if (count($rowTotals) <= 1 || count($colTotals) <= 1) {
+        return [
+            "success" => false,
+            "error" => "Chi-square test requires at least 2 categories in each variable. 
+                        Found " . count($rowTotals) . " in arr1 and " . count($colTotals) . " in arr2."
+        ];
+    }
+
     // Calculate Chi-Square
     $chi2 = 0.0;
     $expected = [];
@@ -1224,8 +1233,9 @@ function chiSquareTOI(array $arr1, array $arr2): array
 
     $sig = check_significance_chi($chi2, $df);
 
-    if ($sig['success'] == true){
+    if ($sig['success'] == true) {
         return [
+            "success" => $sig['success'],
             "chi2" => $chi2,
             "df" => $df,
             "crit_value" => $sig['crit_value'],
@@ -1237,8 +1247,10 @@ function chiSquareTOI(array $arr1, array $arr2): array
             "n" => $grandTotal
         ];
     } else {
-        return ["success" => $sig['success'],
-                "error" => $sig['error']];
+        return [
+            "success" => $sig['success'],
+            "error" => $sig['error']
+        ];
     }
 }
 
@@ -1277,6 +1289,7 @@ function chiSquareGOF(array $observedCounts, array $expectedCounts): array
     if ($sig['success'] == true){
     // --- 4. Return All Relevant Calculated Values ---
         return [
+            "success" => $sig['success'],
             "chi2" => round($chi2, 4),
             "df" => $df,
             "crit_value" => $sig['crit_value'],
@@ -1464,6 +1477,7 @@ function pearsonR(array $x_data, array $y_data, array $group_name): ?array
 
     if ($sig['success'] == true){
         return [
+            "success" => $sig['success'],
             'r_value' => $r_value,
             'x_mean' => $x_mean,
             'y_mean' => $y_mean,
@@ -1627,6 +1641,7 @@ function independent_t_test(array $group1, array $group2): array {
     if ($sig['success'] == true){
         return [
             // Data for full table
+            "success" => $sig['success'],
             "group1" => $group1,
             "group2" => $group2,
             "dev1" => $dev1,
@@ -1721,6 +1736,7 @@ function dependent_t_test($dataset1, $dataset2) {
 
     if ($sig['success'] == true){
         return [
+            "success" => $sig['success'],
             "n" => $n,
             "differences" => $differences,
             "mean_var1" => $mean1,

@@ -68,6 +68,8 @@ if (!isset($_SESSION['level']) || !in_array($_SESSION['level'], [1, 2, 3])) {
                             $currentPage = 'academic-profile-entry';
                         } elseif ($currentPage == 'program_metrics_data_entry') {
                             $currentPage = 'program-metrics-entry';
+                        } elseif ($currentPage == 'document_format_entry') {
+                            $currentPage = 'document-design';
                         }
                         ?>
                         <h4 class="mb-3">
@@ -87,6 +89,13 @@ if (!isset($_SESSION['level']) || !in_array($_SESSION['level'], [1, 2, 3])) {
                             href="program-metrics-entry">
                             <span class="d-none d-md-inline">Program Metrics</span>
                             <i class="bi bi-bar-chart d-inline d-md-none"></i>
+                            </a>
+                            <?php endif; ?>
+                            <?php if (isset($_SESSION['level']) && in_array($_SESSION['level'], [0, 1, 2])): ?>
+                            <a class="nav-link <?php if($currentPage=='document-design') echo 'active'; ?>" 
+                            href="document-design">
+                            <span class="d-none d-md-inline">Document Format</span>
+                            <i class="bi bi-file-earmark-text d-inline d-md-none"></i>
                             </a>
                             <?php endif; ?>
                             <span class="underline"></span>

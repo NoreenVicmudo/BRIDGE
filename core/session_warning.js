@@ -1,42 +1,107 @@
-/********** SESSION TIMEOUT WARNING SYSTEM **********/
+/********** SESSION TIMEOUT SYSTEM **********/
 let sessionCheckInterval = null;
-let isWarningShown = false;
 let lastActivity = Date.now();
-let warningShownTime = 0; // Track when warning was last shown
+let sessionTimeRemaining = null;
+let serverLastActivity = null;
+let isLoggingOut = false; // Flag to track intentional logout
 
 // Session timeout settings (in milliseconds) 
 const SESSION_TIMEOUT = 5 * 60 * 1000; // 5 minutes
-const WARNING_TIME = 3 * 60 * 1000; // 3 minutes before timeout
 const CHECK_INTERVAL = 30 * 1000; // Check every 30 seconds
-const WARNING_COOLDOWN = 2 * 60 * 1000; // 2 minutes cooldown before showing warning again
+const INACTIVE_THRESHOLD = 10 * 1000; // Consider inactive after 10 seconds of no activity
 
 function initializeSessionWarning() {
+    // Stop any existing intervals first (in case of navigation)
+    stopSessionWarning();
+    
+    // Don't initialize on auth pages (login, logout, etc.)
+    if (isAuthPage()) {
+        return;
+    }
+    
     // Reset timers on any user activity
     document.addEventListener('click', resetSessionTimers);
     document.addEventListener('keypress', resetSessionTimers);
     document.addEventListener('mousemove', resetSessionTimers);
     document.addEventListener('scroll', resetSessionTimers);
     
+    // Detect logout link clicks and stop session warning system
+    document.addEventListener('click', handleLogoutClick);
+    
     // Start the warning system
     startSessionWarning();
 }
 
 function resetSessionTimers() {
+    // Don't update timers on auth pages
+    if (isAuthPage()) {
+        return;
+    }
+    
     lastActivity = Date.now();
     
-    // Only reset warning flag if enough time has passed since last warning
-    const timeSinceLastWarning = Date.now() - warningShownTime;
-    if (timeSinceLastWarning > WARNING_COOLDOWN) {
-        isWarningShown = false;
-    }
+    // Update server-side activity immediately when user interacts
+    // This ensures the server knows the user is active right away
+    updateServerActivity();
     
     // Clear existing interval
     if (sessionCheckInterval) {
         clearInterval(sessionCheckInterval);
     }
     
-    // Restart the warning system
+    // Restart the session check system
     startSessionWarning();
+}
+
+// Throttled function to update server-side activity
+let activityUpdateThrottle = null;
+let lastServerUpdate = 0;
+const ACTIVITY_UPDATE_THROTTLE = 1000; // Throttle to maximum once per second
+
+async function updateServerActivity() {
+    const now = Date.now();
+    const timeSinceLastUpdate = now - lastServerUpdate;
+    
+    // Clear any pending update - we'll reschedule it
+    if (activityUpdateThrottle) {
+        clearTimeout(activityUpdateThrottle);
+        activityUpdateThrottle = null;
+    }
+    
+    // Always update immediately on first call or after throttle period
+    // This ensures server timeout resets immediately when user clicks
+    const delay = (lastServerUpdate === 0 || timeSinceLastUpdate >= ACTIVITY_UPDATE_THROTTLE) 
+        ? 0  // Immediate update
+        : Math.min(100, ACTIVITY_UPDATE_THROTTLE - timeSinceLastUpdate); // Small delay for rapid clicks
+    
+    activityUpdateThrottle = setTimeout(async () => {
+        activityUpdateThrottle = null;
+        try {
+            // Call the session timeout endpoint with update parameter to reset LAST_ACTIVITY
+            const response = await fetch('core/get_session_timeout.php?update=1&_t=' + Date.now(), {
+                method: 'GET',
+                credentials: 'same-origin',
+                cache: 'no-cache'
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    lastServerUpdate = Date.now();
+                    // Use server's actual timestamp (converted to milliseconds) for accurate countdown
+                    serverLastActivity = data.lastActivity * 1000;
+                    sessionTimeRemaining = data.timeRemaining;
+                } else {
+                    console.debug('Server activity update returned success=false:', data);
+                }
+            } else {
+                console.debug('Server activity update failed with status:', response.status);
+            }
+        } catch (error) {
+            // Silently fail - activity update is not critical
+            console.debug('Activity update failed:', error);
+        }
+    }, delay);
 }
 
 function startSessionWarning() {
@@ -47,7 +112,114 @@ function startSessionWarning() {
     sessionCheckInterval = setInterval(checkSessionStatus, CHECK_INTERVAL);
 }
 
+// Handle logout link clicks to prevent session warning during intentional logout
+function handleLogoutClick(event) {
+    const target = event.target.closest('a');
+    if (target && target.href) {
+        const href = target.href.toLowerCase();
+        // Check if the link points to logout
+        if (href.includes('/logout') || href.includes('core/logout')) {
+            isLoggingOut = true;
+            stopSessionWarning();
+            // Don't prevent default - let the logout proceed normally
+        }
+    }
+    
+    // Also check for buttons or elements that might trigger logout
+    const button = event.target.closest('button');
+    if (button) {
+        const onclick = button.getAttribute('onclick') || '';
+        const dataAction = button.getAttribute('data-action') || '';
+        if (onclick.toLowerCase().includes('logout') || 
+            dataAction.toLowerCase().includes('logout') ||
+            button.textContent.toLowerCase().includes('logout')) {
+            // Check if this button is in a form or has a logout-related action
+            const form = button.closest('form');
+            if (form && (form.action.includes('logout') || form.action.includes('core/logout'))) {
+                isLoggingOut = true;
+                stopSessionWarning();
+            }
+        }
+    }
+}
+
+// Monitor for programmatic logout (e.g., via AJAX calls to logout endpoint)
+// Override fetch to detect logout calls
+(function() {
+    const originalFetch = window.fetch;
+    window.fetch = function(...args) {
+        let url = '';
+        let method = 'GET';
+        
+        // Handle different fetch call patterns
+        if (typeof args[0] === 'string') {
+            url = args[0];
+            method = args[1]?.method || 'GET';
+        } else if (args[0] instanceof Request) {
+            url = args[0].url;
+            method = args[0].method || 'GET';
+            // If options are provided, they override Request method
+            if (args[1]?.method) {
+                method = args[1].method;
+            }
+        } else if (args[0]?.url) {
+            url = args[0].url;
+            method = args[0].method || args[1]?.method || 'GET';
+        }
+        
+        // Detect POST/PUT/DELETE requests to logout endpoint
+        if (url && (url.toLowerCase().includes('/logout') || url.toLowerCase().includes('core/logout'))) {
+            if (method.toUpperCase() === 'POST' || method.toUpperCase() === 'PUT' || method.toUpperCase() === 'DELETE') {
+                isLoggingOut = true;
+                stopSessionWarning();
+            }
+        }
+        
+        return originalFetch.apply(this, args);
+    };
+})();
+
+// Check if we're on a page where session warnings shouldn't show
+function isAuthPage() {
+    const path = window.location.pathname.toLowerCase();
+    return path.includes('/login') || 
+           path.includes('/logout') || 
+           path.includes('/session-expired') ||
+           path.includes('/forget-password') ||
+           path.includes('/verify-email');
+}
+
+// Stop all session checking activities (useful when navigating to auth pages)
+function stopSessionWarning() {
+    if (sessionCheckInterval) {
+        clearInterval(sessionCheckInterval);
+        sessionCheckInterval = null;
+    }
+    if (activityUpdateThrottle) {
+        clearTimeout(activityUpdateThrottle);
+        activityUpdateThrottle = null;
+    }
+}
+
+// Reset logout flag (useful when user logs back in)
+function resetLogoutFlag() {
+    isLoggingOut = false;
+}
+
 async function checkSessionStatus() {
+    // Don't check session status on login/logout pages
+    // Also stop any running intervals if we detect we're on an auth page
+    if (isAuthPage()) {
+        stopSessionWarning();
+        return;
+    }
+    
+    // Don't check or show warnings if user is intentionally logging out
+    if (isLoggingOut) {
+        stopSessionWarning();
+        return;
+    }
+    
     try {
         const response = await fetch('core/get_session_timeout.php', {
             method: 'GET',
@@ -63,30 +235,30 @@ async function checkSessionStatus() {
         const data = await response.json();
         
         if (!data.success || data.isExpired) {
-            // Session expired, redirect immediately
-            showFinalWarning();
+            // Only show warning if we're not already on an auth page
+            // and user is not intentionally logging out
+            if (!isAuthPage() && !isLoggingOut) {
+                showFinalWarning();
+            }
             return;
         }
         
-        const timeRemaining = data.timeRemaining * 1000; // Convert to milliseconds
-        
-        // Show warning if we have 3 minutes or less remaining
-        if (timeRemaining <= WARNING_TIME && !isWarningShown) {
-            showSessionWarning();
-        }
+        // Update session info
+        sessionTimeRemaining = data.timeRemaining;
+        // Update serverLastActivity from server response
+        serverLastActivity = data.lastActivity * 1000; // Convert to milliseconds
         
     } catch (error) {
         console.error('Error checking session status:', error);
     }
 }
 
-function showSessionWarning() {
-    isWarningShown = true;
-    warningShownTime = Date.now(); // Track when warning was shown
-    sessionToast("⚠️ You will be logged out in 3 minutes due to inactivity. Click anywhere to stay logged in.", 10000);
-}
-
 function showFinalWarning() {
+    // Don't show warning if user is intentionally logging out
+    if (isLoggingOut) {
+        return;
+    }
+    
     // Clear the interval to prevent multiple calls
     if (sessionCheckInterval) {
         clearInterval(sessionCheckInterval);
@@ -96,62 +268,19 @@ function showFinalWarning() {
     // Set a flag to bypass navigation guards during session expiration
     window.sessionExpired = true;
     
-    sessionToast("Session expired. Logging out...", 2000);
-    
     // Auto-redirect to timeout landing page with NProgress
-    setTimeout(() => {
-        if (typeof NProgress !== "undefined") {
-            NProgress.start();
-            setTimeout(() => NProgress.set(0.7), 300);
-            setTimeout(() => {
-                NProgress.done();
-                // Force redirect without triggering navigation guards
-                window.location.replace("session-expired?timeout=1");
-            }, 1200);
-        } else {
-            // Fallback without NProgress - use replace to bypass navigation guards
+    if (typeof NProgress !== "undefined") {
+        NProgress.start();
+        setTimeout(() => NProgress.set(0.7), 300);
+        setTimeout(() => {
+            NProgress.done();
+            // Force redirect without triggering navigation guards
             window.location.replace("session-expired?timeout=1");
-        }
-    }, 2000); // Wait for toast to show briefly
-}
-
-
-////////// TOAST HELPER (Responsive) //////////
-function sessionToast(message, duration = 5000) {
-    let toast = document.getElementById("sessionWarningToast");
-    if (!toast) {
-        toast = document.createElement("div");
-        toast.id = "sessionWarningToast";
-        toast.style.position = "fixed";
-        toast.style.top = "20px";
-        toast.style.left = "50%";
-        toast.style.transform = "translateX(-50%) translateY(-100px)";
-        toast.style.background = "#dc3545";
-        toast.style.color = "#fff";
-        toast.style.padding = "12px 20px";
-        toast.style.borderRadius = "8px";
-        toast.style.zIndex = "99999";
-        toast.style.maxWidth = "90%";
-        toast.style.wordWrap = "break-word";
-        toast.style.textAlign = "center";
-        toast.style.fontSize = "clamp(14px, 2vw, 18px)";
-        toast.style.opacity = "0";
-        toast.style.transition = "all 0.5s ease";
-        toast.style.boxShadow = "0 4px 12px rgba(0,0,0,0.3)";
-        document.body.appendChild(toast);
+        }, 1200);
+    } else {
+        // Fallback without NProgress - use replace to bypass navigation guards
+        window.location.replace("session-expired?timeout=1");
     }
-   
-    toast.textContent = message;
-
-    requestAnimationFrame(() => {
-        toast.style.opacity = "1";
-        toast.style.transform = "translateX(-50%) translateY(0)";
-    });
-
-    setTimeout(() => {
-        toast.style.opacity = "0";
-        toast.style.transform = "translateX(-50%) translateY(-100px)";
-    }, duration);
 }
 
 // Initialize when DOM is loaded

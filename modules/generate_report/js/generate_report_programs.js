@@ -790,6 +790,14 @@ function generateReport() {
           console.log('Showing report footer:', reportFooter);
         }
         
+        // Show report meta info (title and generated info)
+        const reportMetaInfo = document.getElementById('reportMetaInfo');
+        if (reportMetaInfo) {
+          reportMetaInfo.classList.remove('hidden');
+          reportMetaInfo.style.display = ''; // Remove inline style to use CSS
+          console.log('Showing report meta info:', reportMetaInfo);
+        }
+        
         if (generatedReport) {
           generatedReport.classList.remove('hidden');
           generatedReport.classList.add('show');

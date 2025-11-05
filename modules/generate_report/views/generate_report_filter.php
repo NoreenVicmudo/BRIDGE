@@ -85,7 +85,7 @@ checkUserAccess($con);
 
                                     <div class="form-group">
                                         <label for="batchYear" class="form-label">Year End</label>
-                                        <select name="yearEnd" id="YearEnd" class="form-select" onchange="populateYearStart()">
+                                        <select name="yearEnd" id="YearEnd" class="form-select">
                                             <option value="none" disabled selected>Select</option>
                                             <option value="2026">2026</option>
                                             <option value="2027">2027</option>

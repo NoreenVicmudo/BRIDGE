@@ -31,6 +31,7 @@ RewriteRule ^settings$ modules/settings/views/settings.php [L]
 RewriteRule ^student-information-entry$ modules/additional_entry/views/student_info_data_entry.php [L]
 RewriteRule ^academic-profile-entry$ modules/additional_entry/views/academic_profile_data_entry.php [L]
 RewriteRule ^program-metrics-entry$ modules/additional_entry/views/program_metrics_data_entry.php [L]
+RewriteRule ^document-design$ modules/additional_entry/views/document_format_entry.php [L]
 
 #user management
 RewriteRule ^approvals$ modules/user_information/views/approval_request.php [L]

@@ -1584,6 +1584,21 @@ input:-webkit-autofill {
     min-width: unset;
     font-size: 13px;
   }
+  
+  /* Document format labels should always be left-aligned on mobile */
+  .logo-upload-group,
+  .color-input-group,
+  .email-input-group {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  
+  .logo-upload-group label,
+  .color-input-group label,
+  .email-input-group label {
+    text-align: left !important;
+    width: 100% !important;
+  }
 }
 @media (max-width: 400px) {
   .btn-group {
@@ -1905,6 +1920,286 @@ input:-webkit-autofill {
 @media (min-width: 769px) {
   #tab-title {
     display: none; /* hide on larger screens */
+  }
+}
+
+/* =====================
+   Document Format Inputs
+   ===================== */
+
+/* Logo Upload Styles */
+.logo-upload-group {
+  margin: 25px 0;
+}
+
+/* Document format labels should always be left-aligned at all screen sizes */
+.logo-upload-group label,
+.color-input-group label,
+.email-input-group label {
+  text-align: left !important;
+}
+
+.logo-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-preview-wrapper {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  max-width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--primary);
+  background: var(--light);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.logo-preview-wrapper:hover {
+  border-color: var(--secondary);
+  box-shadow: 0 6px 20px rgba(92, 41, 124, 0.2);
+  transform: translateY(-2px);
+}
+
+.logo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #f8f9fa;
+  display: block;
+}
+
+.logo-upload-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(92, 41, 124, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.logo-preview-wrapper:hover .logo-upload-overlay {
+  opacity: 1;
+}
+
+.logo-upload-overlay i {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.logo-upload-overlay span {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.btn-remove-logo {
+  padding: 8px 16px;
+  background: var(--warning);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.btn-remove-logo:hover {
+  background: #d11a21;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(237, 28, 36, 0.3);
+}
+
+/* Color Picker Styles */
+.color-input-group {
+  margin: 25px 0;
+}
+
+.color-input-group label {
+  text-align: left !important;
+}
+
+.color-input-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+#colorPicker {
+  width: 60px;
+  height: 50px;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 2px;
+  background: none;
+  transition: border-color 0.3s ease;
+}
+
+#colorPicker:hover {
+  border-color: var(--secondary);
+}
+
+#colorPicker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+#colorPicker::-webkit-color-swatch {
+  border: none;
+  border-radius: 6px;
+}
+
+#colorHexInput {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px 16px;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+#colorHexInput:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(255, 183, 54, 0.2);
+}
+
+.color-hint {
+  display: block;
+  margin-top: 8px;
+  color: #666;
+  font-size: clamp(11px, 2vw, 12px);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  box-sizing: border-box;
+  line-height: 1.4;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Email Input Styles */
+.email-input-group {
+  margin: 25px 0;
+}
+
+.email-input-group label {
+  text-align: left !important;
+}
+
+.email-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.email-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--primary);
+  font-size: 18px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#collegeEmail {
+  width: 100%;
+  padding: 12px 16px 12px 48px;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: var(--light);
+}
+
+#collegeEmail:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(255, 183, 54, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .logo-preview-wrapper {
+    width: 120px;
+    height: 120px;
+  }
+
+  .color-input-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #colorPicker {
+    width: 100%;
+    height: 60px;
+  }
+}
+
+/* Responsive adjustments for very small screens (<= 425px) */
+@media (max-width: 425px) {
+  .color-input-group {
+    width: 100%;
+    margin: 20px 0;
+    padding: 12px 8px !important;
+    box-sizing: border-box;
+  }
+
+  .color-input-container {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  .color-hint {
+    width: 100%;
+    max-width: 100%;
+    font-size: 10px;
+    padding: 0;
+    box-sizing: border-box;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    margin-top: 6px;
+    overflow: hidden;
+  }
+
+  .entry-content .form-group {
+    padding: 12px 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .entry-content {
+    padding: 20px 12px;
+    box-sizing: border-box;
+  }
+
+  .container {
+    padding: 15px 10px;
+    box-sizing: border-box;
   }
 }
 

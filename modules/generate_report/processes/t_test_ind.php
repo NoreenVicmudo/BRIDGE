@@ -202,8 +202,8 @@ foreach ($dataset1 as $i => $iv) {
 // Ensure exactly 2 groups for an independent t-test
 if (count($groups) !== 2) {
         echo json_encode([
-        'htmlDisplay' => "<h4></h4>Independent t-test requires exactly 2 groups.</h4>",
-        //'consolidatedData' => $consolidatedData
+            "success" => false,
+            "error" => "Each group must have at least 2 samples."
     ], JSON_NUMERIC_CHECK);
 
     exit;
@@ -277,7 +277,7 @@ $htmlDisplay .= "<h3>Difference Scores Calculations</h3>
 <tr><td>Mean₂ (M₂)</td><td>" . number_format($result['mean2'], 3) . "</td></tr>
 <tr><td>Variance₁ (s₁²)</td><td>" . number_format($result['var1'], 3) . "</td></tr>
 <tr><td>Variance₂ (s₂²)</td><td>" . number_format($result['var2'], 3) . "</td></tr>
-<tr><td>Pooled Variance (s<sub>p</sub>²)</td><td>" . number_format($result['sp2'], 3) . "</td></tr>
+<tr><td>Pooled Variance</td><td>" . number_format($result['sp2'], 3) . "</td></tr>
 <tr><td>Standard Error (SE)</td><td>" . number_format($result['se'], 3) . "</td></tr>
 <tr><td>t-Value</td><td>" . number_format($result['t_value'], 3) . "</td></tr>
 <tr><td>Degrees of Freedom</td><td>{$result['df']}</td></tr>
