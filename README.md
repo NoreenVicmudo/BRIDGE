@@ -5,3 +5,4 @@
 # Users can import students through csv file and export the reports generated.
 #
 # Laravel-Raect Version: https://github.com/NoreenVicmudo/bridge-system
+# Tutorial Video: https://drive.google.com/file/d/1r4KxWb77_USwYBMSJhfK-bw2XWpGuA6n/view?usp=sharing
