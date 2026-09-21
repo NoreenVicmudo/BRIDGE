@@ -4,5 +4,4 @@
 # Report generation allows user to generate graphs based on the statistical analysis selected.
 # Users can import students through csv file and export the reports generated.
 #
-# Link: bridge.x10.network/bridge/login
-# Note: Please inform the admins when testing the system as there is an approval request to access the system.
+# Laravel-Raect Version: https://github.com/NoreenVicmudo/bridge-system
